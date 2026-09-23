@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>日文｜個人資料館</title>
+  <style>
+    :root {
+      --paper: #F7F6F1;
+      --ink: #282C29;
+      --sky: #A9D0DC;
+      --jade: #46634D;
+      --green-jade: #4B897D;
+      --blue: #34799A;
+      --deep-blue: #3C5577;
+      --brown: #816C4D;
+      --gold: #E8C477;
+      --content-width: 1180px;
+      --font-main:
+        "Noto Sans TC",
+        "Noto Sans JP",
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        sans-serif;
+      --font-display:
+        "Noto Sans TC",
+        "Noto Sans JP",
+        system-ui,
+        sans-serif;
+      --font-english:
+        "Helvetica Neue",
+        Arial,
+        sans-serif;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--font-main);
+      font-weight: 400;
+      line-height: 1.7;
+    }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+    button {
+      font: inherit;
+    }
+    header {
+      width: min(var(--content-width), calc(100% - 64px));
+      margin: 0 auto;
+      padding: 28px 0;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+    .language-switcher {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .language-button,
+    .menu-button {
+      border: 0;
+      background: none;
+      padding: 0;
+      color: color-mix(in srgb, var(--ink) 48%, transparent);
+      cursor: pointer;
+    }
+    .language-button {
+      font-size: 12px;
+    }
+    .language-button.active {
+      color: var(--ink);
+    }
+    .menu-button {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+    }
+    main {
+      width: min(var(--content-width), calc(100% - 64px));
+      margin: 0 auto;
+      padding: 76px 0 130px;
+    }
+    .back {
+      position: absolute;
+      top: 28px;
+      left: max(32px, calc((100vw - var(--content-width)) / 2));
+      color: color-mix(in srgb, var(--ink) 52%, transparent);
+      font-size: 18px;
+      transition:
+        color 0.2s,
+        transform 0.2s;
+    }
+    .back:hover {
+      color: var(--ink);
+      transform: translateX(-4px);
+    }
+    .intro {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 80px;
+      align-items: end;
+      margin-bottom: 110px;
+    }
+    .label {
+      margin-bottom: 12px;
+      color: var(--brown);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+    }
+    .title {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: clamp(48px, 7vw, 82px);
+      font-weight: 500;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+    }
+    .intro-text {
+      margin: 0;
+      color: color-mix(in srgb, var(--ink) 68%, transparent);
+      font-size: 14px;
+      line-height: 2;
+    }
+    .category-list {
+      border-top: 1px solid
+        color-mix(in srgb, var(--ink) 18%, transparent);
+    }
+    .category {
+      position: relative;
+      display: grid;
+      grid-template-columns: 90px 1fr auto;
+      gap: 34px;
+      align-items: center;
+      min-height: 138px;
+      padding: 28px 8px;
+      border-bottom: 1px solid
+        color-mix(in srgb, var(--ink) 13%, transparent);
+      overflow: hidden;
+      transition:
+        padding 0.35s ease,
+        background 0.35s ease;
+    }
+    .category::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--category-color, var(--sky));
+      transform: scaleY(0);
+      transform-origin: center;
+      transition: transform 0.35s ease;
+    }
+    .category:hover {
+      padding-left: 28px;
+      padding-right: 28px;
+      background:
+        color-mix(
+          in srgb,
+          var(--category-color, var(--sky)) 10%,
+          var(--paper)
+        );
+    }
+    .category:hover::before {
+      transform: scaleY(1);
+    }
+    .category-number {
+      align-self: start;
+      padding-top: 7px;
+      color: color-mix(in srgb, var(--ink) 42%, transparent);
+      font-family: var(--font-english);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+    }
+    .category-main {
+      min-width: 0;
+    }
+    .category-title {
+      margin: 0;
+      font-size: 27px;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+    }
+    .category-arrow {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: 1px solid
+        color-mix(in srgb, var(--ink) 16%, transparent);
+      color: color-mix(in srgb, var(--ink) 55%, transparent);
+      transition:
+        background 0.3s ease,
+        color 0.3s ease,
+        border-color 0.3s ease,
+        transform 0.3s ease;
+    }
+    .category:hover .category-arrow {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: var(--paper);
+      transform: translateX(4px);
+    }
+    /* 分類一：能力認證 */
+    .category-certification {
+      --category-color: var(--deep-blue);
+    }
+    /* 分類二：教學 */
+    .category-teaching {
+      --category-color: var(--green-jade);
+    }
+    /* 分類三：相關活動 */
+    .category-activity {
+      --category-color: var(--sky);
+    }
+    /* 分類四：商業翻譯 */
+    .category-translation {
+      --category-color: var(--gold);
+    }
+    footer {
+      width: min(var(--content-width), calc(100% - 64px));
+      margin: 0 auto;
+      padding: 28px 0 42px;
+      border-top: 1px solid
+        color-mix(in srgb, var(--ink) 12%, transparent);
+      color: color-mix(in srgb, var(--ink) 45%, transparent);
+      font-size: 11px;
+    }
+    @media (max-width: 760px) {
+      header,
+      main,
+      footer {
+        width: min(100% - 36px, var(--content-width));
+      }
+      header {
+        padding: 22px 0;
+      }
+      .header-right {
+        gap: 18px;
+      }
+      main {
+        padding-top: 48px;
+        padding-bottom: 90px;
+      }
+      .back {
+        top: 22px;
+        left: 18px;
+        margin-bottom: 0;
+      }
+      .intro {
+        display: block;
+        margin-bottom: 70px;
+      }
+      .intro-text {
+        max-width: 100%;
+        margin-top: 30px;
+      }
+      .category {
+        grid-template-columns: 48px 1fr auto;
+        gap: 18px;
+        min-height: 118px;
+        padding: 24px 2px;
+      }
+      .category:hover {
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+      .category-title {
+        font-size: 22px;
+      }
+      .category-arrow {
+        width: 30px;
+        height: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-right">
+      <div class="language-switcher">
+        <button
+          class="language-button active"
+          onclick="setLanguage('zh')"
+        >
+          中
+        </button>
+        <button
+          class="language-button"
+          onclick="setLanguage('en')"
+        >
+          EN
+        </button>
+        <button
+          class="language-button"
+          onclick="setLanguage('ja')"
+        >
+          日
+        </button>
+      </div>
+      <button
+        class="menu-button"
+        data-zh="選單"
+        data-en="MENU"
+        data-ja="メニュー"
+      >
+        選單
+      </button>
+    </div>
+  </header>
+  <main>
+    <a
+      class="back"
+      href="index.html"
+      aria-label="返回首頁"
+    >
+      ←
+    </a>
+    <section class="intro">
+      <div>
+        <div
+          class="label"
+          data-zh="領域"
+          data-en="FIELD"
+          data-ja="分野"
+        >
+          領域
+        </div>
+        <h1
+          class="title"
+          data-zh="日文"
+          data-en="Japanese"
+          data-ja="日本語"
+        >
+          日文
+        </h1>
+      </div>
+      <p
+        class="intro-text"
+        data-zh="從學習、教學、活動到未來可能延伸的翻譯工作，整理與日文相關的累積。"
+        data-en="A collection of experiences related to Japanese, from learning and teaching to activities and future translation work."
+        data-ja="学習、教育、活動、将来的な翻訳まで、日本語に関する経験をまとめています。"
+      >
+        從學習、教學、活動到未來可能延伸的翻譯工作，整理與日文相關的累積。
+      </p>
+    </section>
+    <section class="category-list">
+      <!-- 分類一：能力認證 -->
+      <a
+        class="category category-certification"
+        href="japanese-certification.html"
+      >
+        <div class="category-number">
+          01
+        </div>
+        <div class="category-main">
+          <h2
+            class="category-title"
+            data-zh="能力認證"
+            data-en="Certification"
+            data-ja="能力認定"
+          >
+            能力認證
+          </h2>
+        </div>
+        <div class="category-arrow">
+          →
+        </div>
+      </a>
+      <!-- 分類二：教學 -->
+      <a
+        class="category category-teaching"
+        href="japanese-teaching.html"
+      >
+        <div class="category-number">
+          02
+        </div>
+        <div class="category-main">
+          <h2
+            class="category-title"
+            data-zh="教學"
+            data-en="Teaching"
+            data-ja="教育"
+          >
+            教學
+          </h2>
+        </div>
+        <div class="category-arrow">
+          →
+        </div>
+      </a>
+      <!-- 分類三：相關活動 -->
+      <a
+        class="category category-activity"
+        href="japanese-activities.html"
+      >
+        <div class="category-number">
+          03
+        </div>
+        <div class="category-main">
+          <h2
+            class="category-title"
+            data-zh="相關活動"
+            data-en="Activities"
+            data-ja="関連活動"
+          >
+            相關活動
+          </h2>
+        </div>
+        <div class="category-arrow">
+          →
+        </div>
+      </a>
+      <!-- 分類四：商業翻譯 -->
+      <a
+        class="category category-translation"
+        href="japanese-translation.html"
+      >
+        <div class="category-number">
+          04
+        </div>
+        <div class="category-main">
+          <h2
+            class="category-title"
+            data-zh="商業翻譯"
+            data-en="Business Translation"
+            data-ja="商業翻訳"
+          >
+            商業翻譯
+          </h2>
+        </div>
+        <div class="category-arrow">
+          →
+        </div>
+      </a>
+    </section>
+  </main>
+  <footer></footer>
+  <script>
+    function setLanguage(language) {
+      document
+        .querySelectorAll("[data-zh]")
+        .forEach(element => {
+          const text =
+            element.getAttribute("data-" + language);
+          if (text !== null) {
+            element.textContent = text;
+          }
+        });
+      document
+        .querySelectorAll(".language-button")
+        .forEach(button => {
+          button.classList.remove("active");
+        });
+      document
+        .querySelector(
+          `.language-button[onclick="setLanguage('${language}')"]`
+        )
+        .classList.add("active");
+      document.documentElement.lang =
+        language === "zh"
+          ? "zh-Hant"
+          : language === "ja"
+            ? "ja"
+            : "en";
+    }
+  </script>
+</body>
+</html>
