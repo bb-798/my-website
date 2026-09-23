@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>個人資料館</title>
+
   <style>
     /* =========================================================
        ↓↓↓ 只需要修改這裡 ↓↓↓
@@ -19,6 +20,7 @@
       --deep-blue: #3C5577;
       --brown: #816C4D;
       --gold: #E8C477;
+
       /* ---------- 字體 ---------- */
       --font-main:
         "Noto Sans TC",
@@ -27,79 +29,76 @@
         -apple-system,
         BlinkMacSystemFont,
         sans-serif;
+
       --font-display:
         "Noto Sans TC",
         "Noto Sans JP",
         system-ui,
         sans-serif;
+
       --font-english:
         "Helvetica Neue",
         Arial,
         sans-serif;
+
       /* ---------- 網頁寬度 ---------- */
       --content-width: 1180px;
     }
+
     /* =========================================================
        ↑↑↑ 修改到這裡就好
     ========================================================= */
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
+
     body {
-  background: var(--paper);
-  color: var(--ink);
-  font-family: var(--font-main);
-  line-height: 1.7;
-}
-a {
-  color: inherit;
-  text-decoration: none;
-}
-button,
-input,
-textarea {
-  font: inherit;
-}
-    button,
-    input,
-    textarea {
-      font: inherit;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--font-main);
+      line-height: 1.7;
     }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
     button {
+      font: inherit;
       cursor: pointer;
     }
+
     /* =========================
        Header
     ========================= */
+
     header {
       width: min(var(--content-width), calc(100% - 80px));
       margin: 0 auto;
       padding: 34px 0 22px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-end;
       border-bottom: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
     }
-    .site-name {
-      font-family: var(--font-display);
-      font-size: 25px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      color: var(--ink);
-    }
+
     .header-right {
       display: flex;
       align-items: center;
       gap: 28px;
     }
+
     .language {
       display: flex;
       gap: 14px;
       font-family: var(--font-english);
       font-size: 13px;
     }
+
     .language button,
     .menu-button {
       border: 0;
@@ -108,25 +107,34 @@ textarea {
       opacity: 0.65;
       transition: 0.2s;
     }
+
     .language button:hover,
     .language button.active,
     .menu-button:hover {
       color: var(--jade);
       opacity: 1;
     }
+
     .menu-button {
-      letter-spacing: 0.08em;
+      font-family: Arial, sans-serif;
+      font-size: 24px;
+      line-height: 1;
+      padding: 0;
     }
+
     /* =========================
        Main
     ========================= */
+
     main {
       width: min(var(--content-width), calc(100% - 80px));
       margin: 0 auto;
     }
+
     /* =========================
        個人資料
     ========================= */
+
     .profile {
       min-height: 430px;
       display: grid;
@@ -135,9 +143,11 @@ textarea {
       gap: 80px;
       padding: 72px 0;
     }
+
     .profile-text {
       max-width: 580px;
     }
+
     .profile-label {
       margin-bottom: 18px;
       color: var(--brown);
@@ -145,6 +155,7 @@ textarea {
       font-size: 13px;
       letter-spacing: 0.18em;
     }
+
     .profile-name {
       margin-bottom: 18px;
       font-family: var(--font-display);
@@ -153,11 +164,13 @@ textarea {
       line-height: 1.1;
       letter-spacing: 0.04em;
     }
+
     .profile-description {
       color: color-mix(in srgb, var(--ink) 72%, transparent);
       font-size: 17px;
       max-width: 460px;
     }
+
     .profile-image {
       width: min(100%, 390px);
       aspect-ratio: 4 / 5;
@@ -165,82 +178,81 @@ textarea {
       overflow: hidden;
       background: color-mix(in srgb, var(--paper) 88%, var(--ink));
     }
+
     .profile-image img {
       width: 100%;
       height: 100%;
       display: block;
       object-fit: cover;
     }
+
     /* =========================
        分類切換
     ========================= */
+
     .category-nav {
       display: flex;
-      gap: 38px;
-      padding: 20px 0;
-      border-top: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
-      border-bottom: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
+      gap: 42px;
+      padding: 8px 0 26px;
     }
+
     .category-button {
       position: relative;
       flex: 0 0 auto;
       border: 0;
       background: transparent;
-      color: color-mix(in srgb, var(--ink) 55%, transparent);
+      color: color-mix(in srgb, var(--ink) 45%, transparent);
       font-size: 15px;
       letter-spacing: 0.08em;
-      padding: 4px 0;
-      transition: 0.2s;
+      padding: 0;
+      transition: color 0.2s ease;
     }
+
     .category-button:hover,
     .category-button.active {
-      color: var(--jade);
+      color: var(--ink);
     }
+
     .category-button.active::after {
       content: "";
       position: absolute;
-      left: 0;
-      right: 0;
-      bottom: -21px;
-      height: 2px;
+      left: 50%;
+      bottom: -14px;
+      width: 4px;
+      height: 4px;
+      transform: translateX(-50%);
       background: var(--jade);
+      border-radius: 50%;
     }
+
     /* =========================
        內容區
     ========================= */
+
     .content-area {
-      min-height: 460px;
-      padding: 60px 0 100px;
+      padding: 20px 0 100px;
     }
-    .content-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 34px;
+
+    .category-content {
+      width: 100%;
     }
-    .content-title {
-      font-family: var(--font-display);
-      font-size: 26px;
-      font-weight: 500;
-      letter-spacing: 0.05em;
-    }
-    .content-note {
-      color: color-mix(in srgb, var(--ink) 45%, transparent);
-      font-family: var(--font-english);
-      font-size: 13px;
-    }
+
     /* =========================
        圖文展示
     ========================= */
+
     .items {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 42px 28px;
     }
+
     .item {
+      display: block;
       border-top: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
       padding-top: 18px;
     }
+
     .item-image {
       width: 100%;
       aspect-ratio: 4 / 3;
@@ -248,6 +260,7 @@ textarea {
       overflow: hidden;
       background: color-mix(in srgb, var(--paper) 88%, var(--ink));
     }
+
     .item-image img {
       width: 100%;
       height: 100%;
@@ -255,9 +268,11 @@ textarea {
       object-fit: cover;
       transition: transform 0.45s ease;
     }
+
     .item:hover img {
       transform: scale(1.035);
     }
+
     .item-category {
       margin-bottom: 5px;
       color: var(--green-jade);
@@ -265,21 +280,26 @@ textarea {
       font-size: 12px;
       letter-spacing: 0.12em;
     }
+
     .item-title {
       font-family: var(--font-display);
       font-size: 18px;
       margin-bottom: 4px;
     }
+
     .item-text {
       color: color-mix(in srgb, var(--ink) 58%, transparent);
       font-size: 14px;
     }
+
     /* =========================
        純文字列表
     ========================= */
+
     .text-list {
-      border-top: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
+      width: 100%;
     }
+
     .text-list-item {
       display: grid;
       grid-template-columns: 130px 1fr auto;
@@ -287,238 +307,533 @@ textarea {
       padding: 21px 0;
       border-bottom: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
     }
+
     .text-list-date {
       color: var(--brown);
       font-family: var(--font-english);
       font-size: 13px;
     }
+
     .text-list-title {
       font-family: var(--font-display);
       font-size: 16px;
     }
+
     .text-list-type {
       color: color-mix(in srgb, var(--ink) 42%, transparent);
       font-family: var(--font-english);
       font-size: 12px;
     }
+
     /* =========================
        Footer
     ========================= */
+
     footer {
       width: min(var(--content-width), calc(100% - 80px));
       margin: 0 auto;
-      padding: 25px 0 45px;
-      color: color-mix(in srgb, var(--ink) 42%, transparent);
-      font-family: var(--font-english);
-      font-size: 12px;
+      padding: 30px 0 25px;
       border-top: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+      color: color-mix(in srgb, var(--ink) 55%, transparent);
+      font-size: 12px;
     }
+
+    .footer-contact {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 30px;
+      padding-bottom: 28px;
+    }
+
+    .footer-title {
+      color: var(--ink);
+      font-size: 13px;
+      letter-spacing: 0.08em;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      align-items: baseline;
+    }
+
+    .footer-links a {
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--jade);
+    }
+
+    .footer-bottom {
+      padding-top: 18px;
+      border-top: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
+      text-align: center;
+      color: color-mix(in srgb, var(--ink) 35%, transparent);
+      font-family: var(--font-english);
+      font-size: 11px;
+    }
+
     /* =========================
        Responsive
     ========================= */
+
     @media (max-width: 800px) {
+
       header,
       main,
       footer {
         width: min(100% - 40px, var(--content-width));
       }
+
       header {
         padding-top: 24px;
       }
+
       .profile {
         grid-template-columns: 1fr;
         gap: 35px;
         padding: 55px 0;
       }
+
       .profile-image {
         width: min(100%, 340px);
         justify-self: start;
       }
+
       .profile-name {
         font-size: clamp(42px, 12vw, 62px);
       }
+
       .items {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
+
       .text-list-item {
         grid-template-columns: 95px 1fr;
       }
+
       .text-list-type {
         display: none;
       }
     }
+
     @media (max-width: 520px) {
-      .site-name {
-        font-size: 20px;
-      }
+
       .header-right {
         gap: 15px;
       }
+
       .language {
         gap: 8px;
       }
+
       .profile {
         padding: 45px 0;
       }
+
       .profile-description {
         font-size: 15px;
       }
+
       .category-nav {
         gap: 25px;
       }
+
       .items {
         grid-template-columns: 1fr;
       }
+
       .content-area {
-        padding-top: 45px;
+        padding-top: 16px;
       }
-      .content-header {
+
+      .footer-contact {
         display: block;
       }
-      .content-note {
+
+      .footer-links {
         display: block;
-        margin-top: 6px;
+        margin-top: 14px;
+      }
+
+      .footer-links span,
+      .footer-links a {
+        display: block;
+        margin-top: 7px;
       }
     }
   </style>
 </head>
+
 <body>
+
   <header>
-    <div class="site-name">你的名字</div>
+
     <div class="header-right">
+
       <div class="language">
         <button class="active">中</button>
         <button>EN</button>
         <button>日</button>
       </div>
-      <button class="menu-button">MENU</button>
+
+      <button
+        class="menu-button"
+        aria-label="選單">
+        ☰
+      </button>
+
     </div>
+
   </header>
+
+
   <main>
+
+    <!-- =========================
+         個人資料
+    ========================= -->
+
     <section class="profile">
+
       <div class="profile-text">
+
         <div class="profile-label">
           PROFILE
         </div>
+
         <h1 class="profile-name">
           你的名字
         </h1>
+
         <p class="profile-description">
           日文系｜學生<br>
           正在學習，也在做一些有趣的事。
         </p>
+
       </div>
+
       <div class="profile-image">
+
         <img
           src="images/profile.jpg"
-          alt="個人照片"
-        >
+          alt="個人照片">
+
       </div>
+
     </section>
-  <nav class="category-nav">
-  <button class="category-button active"
-          onclick="showCategory('recent', this)">
-    最近
-  </button>
-  <button class="category-button"
-          onclick="showCategory('featured', this)">
-    精選
-  </button>
-  <button class="category-button"
-          onclick="showCategory('fields', this)">
-    領域
-  </button>
-  <button class="category-button"
-          onclick="showCategory('records', this)">
-    紀錄
-  </button>
-</nav>
-<section class="content-area">
-  <!-- =========================
-       領域
-  ========================= -->
-  <div class="category-content" id="fields">
-    <div class="items">
-      <article class="item">
-        <div class="item-image">
-          <img src="images/interest-01.jpg" alt="">
+
+
+    <!-- =========================
+         分類切換
+    ========================= -->
+
+    <nav class="category-nav">
+
+      <button
+        type="button"
+        class="category-button active"
+        data-category="recent">
+        最近
+      </button>
+
+      <button
+        type="button"
+        class="category-button"
+        data-category="featured">
+        精選
+      </button>
+
+      <button
+        type="button"
+        class="category-button"
+        data-category="fields">
+        領域
+      </button>
+
+      <button
+        type="button"
+        class="category-button"
+        data-category="records">
+        紀錄
+      </button>
+
+    </nav>
+
+
+    <section class="content-area">
+
+      <!-- =========================
+           最近
+      ========================= -->
+
+      <div
+        class="category-content"
+        id="recent">
+
+        <div class="text-list">
+
+          <div class="text-list-item">
+
+            <span class="text-list-date">
+              09 / 2026
+            </span>
+
+            <span class="text-list-title">
+              網站製作
+            </span>
+
+            <span class="text-list-type">
+              PROJECT
+            </span>
+
+          </div>
+
+          <div class="text-list-item">
+
+            <span class="text-list-date">
+              09 / 2026
+            </span>
+
+            <span class="text-list-title">
+              投資入門
+            </span>
+
+            <span class="text-list-type">
+              STUDY
+            </span>
+
+          </div>
+
+          <div class="text-list-item">
+
+            <span class="text-list-date">
+              08 / 2026
+            </span>
+
+            <span class="text-list-title">
+              日本旅行
+            </span>
+
+            <span class="text-list-type">
+              TRAVEL
+            </span>
+
+          </div>
+
         </div>
-        <div class="item-category">MINERAL</div>
-        <h3 class="item-title">礦物・寶石</h3>
-        <p class="item-text">礦物、玉石、珠寶與相關知識。</p>
-      </article>
-<a href="japanese.html" class="item">
-  <div class="item-image">
-    <img src="images/interest-02.jpg" alt="">
-  </div>
-  <div class="item-category">JAPANESE</div>
-  <h3 class="item-title">日文</h3>
-  <p class="item-text">日文學習、教學與相關經驗。</p>
-</a>
-      <article class="item">
-        <div class="item-image">
-          <img src="images/interest-03.jpg" alt="">
+
+      </div>
+
+
+      <!-- =========================
+           精選
+           目前清空
+      ========================= -->
+
+      <div
+        class="category-content"
+        id="featured"
+        style="display: none;">
+
+      </div>
+
+
+      <!-- =========================
+           領域
+      ========================= -->
+
+      <div
+        class="category-content"
+        id="fields"
+        style="display: none;">
+
+        <div class="items">
+
+          <!-- 日文 -->
+
+          <a
+            href="japanese.html"
+            class="item">
+
+            <div class="item-image">
+
+              <img
+                src="images/interest-02.jpg"
+                alt="日文">
+
+            </div>
+
+            <div class="item-category">
+              JAPANESE
+            </div>
+
+            <h3 class="item-title">
+              日文
+            </h3>
+
+            <p class="item-text">
+              日文學習、教學與相關經驗。
+            </p>
+
+          </a>
+
+
+          <!-- 礦物・寶石 -->
+
+          <a
+            href="mineral.html"
+            class="item">
+
+            <div class="item-image">
+
+              <img
+                src="images/interest-01.jpg"
+                alt="礦物・寶石">
+
+            </div>
+
+            <div class="item-category">
+              MINERAL
+            </div>
+
+            <h3 class="item-title">
+              礦物・寶石
+            </h3>
+
+            <p class="item-text">
+              礦物、玉石、珠寶與相關知識。
+            </p>
+
+          </a>
+
+
+          <!-- 彩妝 -->
+
+          <a
+            href="makeup.html"
+            class="item">
+
+            <div class="item-image">
+
+              <img
+                src="images/interest-03.jpg"
+                alt="彩妝">
+
+            </div>
+
+            <div class="item-category">
+              MAKE UP
+            </div>
+
+            <h3 class="item-title">
+              彩妝
+            </h3>
+
+            <p class="item-text">
+              妝容、造型與視覺表現。
+            </p>
+
+          </a>
+
         </div>
-        <div class="item-category">BEAUTY</div>
-        <h3 class="item-title">彩妝</h3>
-        <p class="item-text">妝容、造型與視覺表現。</p>
-      </article>
-    </div>
-  </div>
-  <!-- =========================
-       紀錄
-  ========================= -->
-  <div class="category-content" id="records" style="display:none;">
-  </div>
-  <!-- =========================
-       最近
-  ========================= -->
-  <div class="category-content" id="recent" style="display:none;">
-    <div class="text-list">
-      <div class="text-list-item">
-        <span class="text-list-date">09 / 2026</span>
-        <span class="text-list-title">網站製作</span>
-        <span class="text-list-type">PROJECT</span>
+
       </div>
-      <div class="text-list-item">
-        <span class="text-list-date">09 / 2026</span>
-        <span class="text-list-title">投資入門</span>
-        <span class="text-list-type">STUDY</span>
+
+
+      <!-- =========================
+           紀錄
+           目前清空
+      ========================= -->
+
+      <div
+        class="category-content"
+        id="records"
+        style="display: none;">
+
       </div>
-      <div class="text-list-item">
-        <span class="text-list-date">08 / 2026</span>
-        <span class="text-list-title">日本旅行</span>
-        <span class="text-list-type">TRAVEL</span>
-      </div>
-    </div>
-  </div>
-  <!-- =========================
-       精選
-  ========================= -->
-  <div class="category-content" id="featured" style="display:none;">
-  </div>
-</section>
-<div class="category-content" id="featured" style="display:none;">
-</div>
-      </div>
+
     </section>
+
   </main>
+
+
   <footer>
-    個人資料館
+
+    <div class="footer-contact">
+
+      <div class="footer-title">
+        聯絡
+      </div>
+
+      <div class="footer-links">
+
+        <span>
+          mimin59606162@gmail.com
+        </span>
+
+        <a
+          href="#"
+          target="_blank">
+          Instagram
+        </a>
+
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      2026 · 個人資料網頁
+    </div>
+
   </footer>
+
+
   <script>
-    function showCategory(category, button) {
-      document.querySelectorAll(".category-content")
-        .forEach(section => {
-          section.style.display = "none";
+
+    const buttons =
+      document.querySelectorAll(".category-button");
+
+    const contents =
+      document.querySelectorAll(".category-content");
+
+
+    buttons.forEach(button => {
+
+      button.addEventListener("click", function () {
+
+        const targetId =
+          this.getAttribute("data-category");
+
+
+        contents.forEach(content => {
+          content.style.display = "none";
         });
-      document.getElementById(category).style.display = "block";
-      document.querySelectorAll(".category-button")
-        .forEach(btn => {
-          btn.classList.remove("active");
+
+
+        const target =
+          document.getElementById(targetId);
+
+
+        if (target) {
+          target.style.display = "block";
+        }
+
+
+        buttons.forEach(item => {
+          item.classList.remove("active");
         });
-      button.classList.add("active");
-    }
+
+
+        this.classList.add("active");
+
+      });
+
+    });
+
   </script>
+
 </body>
 </html>
