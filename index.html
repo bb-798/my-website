@@ -6,56 +6,25 @@
   <title>個人資料館</title>
 
   <style>
+    :root {
+      /* =========================
+         色票
+         ★ 主題色：翡翠 #46634D
+      ========================= */
 
-    /* ==================================================
-       色彩設定
-       只需要修改這裡，就可以測試不同色彩配置
+      --paper: #F7F6F1;
+      --ink: #282C29;
 
-       主題色：翡翠
-    ================================================== */
-
-    --sky: #816C4D;
---jade: #A9D0DC;
---green-jade: #34799A;
---blue: #E8C477;
---deep-blue: #4B897D;
---brown: #46634D;
---gold: #3C5577;
-
-
-      /* ===== 本次配置 ===== */
-
-      --paper: var(--sky);
-      --ink: var(--deep-blue);
-
-      --primary: var(--jade);
-      --secondary: var(--green-jade);
-      --accent-blue: var(--blue);
-      --accent-deep: var(--deep-blue);
-      --accent-warm: var(--brown);
-      --accent-gold: var(--gold);
-
-
-      /* ===== 透明度 ===== */
-
-      --ink-72: color-mix(in srgb, var(--ink) 72%, transparent);
-      --ink-65: color-mix(in srgb, var(--ink) 65%, transparent);
-      --ink-60: color-mix(in srgb, var(--ink) 60%, transparent);
-      --ink-55: color-mix(in srgb, var(--ink) 55%, transparent);
-      --ink-45: color-mix(in srgb, var(--ink) 45%, transparent);
-      --ink-42: color-mix(in srgb, var(--ink) 42%, transparent);
-      --ink-16: color-mix(in srgb, var(--ink) 16%, transparent);
-      --ink-14: color-mix(in srgb, var(--ink) 14%, transparent);
-      --ink-12: color-mix(in srgb, var(--ink) 12%, transparent);
-
-
-      /* ===== 其他 ===== */
-
-      --white: var(--paper);
+      --sky: #A9D0DC;
+      --jade: #46634D;
+      --green-jade: #4B897D;
+      --blue: #34799A;
+      --deep-blue: #3C5577;
+      --brown: #816C4D;
+      --gold: #E8C477;
 
       --content-width: 1180px;
     }
-
 
     * {
       box-sizing: border-box;
@@ -63,11 +32,9 @@
       padding: 0;
     }
 
-
     body {
       background: var(--paper);
       color: var(--ink);
-
       font-family:
         "Noto Sans TC",
         "Noto Sans JP",
@@ -75,10 +42,8 @@
         -apple-system,
         BlinkMacSystemFont,
         sans-serif;
-
       line-height: 1.7;
     }
-
 
     button,
     input,
@@ -86,22 +51,16 @@
       font: inherit;
     }
 
-
     button {
       cursor: pointer;
     }
 
-
-    /* ==================================================
+    /* =========================
        Header
-    ================================================== */
+    ========================= */
 
     header {
-      width: min(
-        var(--content-width),
-        calc(100% - 80px)
-      );
-
+      width: min(var(--content-width), calc(100% - 80px));
       margin: 0 auto;
       padding: 34px 0 22px;
 
@@ -109,182 +68,127 @@
       align-items: center;
       justify-content: space-between;
 
-      border-bottom:
-        1px solid var(--ink-16);
+      border-bottom: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
     }
-
 
     .site-name {
       font-size: 25px;
       font-weight: 600;
-
       letter-spacing: 0.08em;
-
       color: var(--ink);
     }
-
 
     .header-right {
       display: flex;
       align-items: center;
-
       gap: 28px;
     }
-
 
     .language {
       display: flex;
       gap: 14px;
-
       font-size: 13px;
     }
-
 
     .language button,
     .menu-button {
       border: 0;
       background: transparent;
-
       color: var(--ink);
       opacity: 0.65;
-
       transition: 0.2s;
     }
-
 
     .language button:hover,
     .language button.active,
     .menu-button:hover {
-
-      color: var(--primary);
+      color: var(--jade);
       opacity: 1;
     }
-
 
     .menu-button {
       letter-spacing: 0.08em;
     }
 
-
-    /* ==================================================
+    /* =========================
        Main
-    ================================================== */
+    ========================= */
 
     main {
-      width: min(
-        var(--content-width),
-        calc(100% - 80px)
-      );
-
+      width: min(var(--content-width), calc(100% - 80px));
       margin: 0 auto;
     }
 
-
-    /* ==================================================
-       個人資料
-    ================================================== */
+    /* 個人資料 */
 
     .profile {
       min-height: 430px;
 
       display: grid;
       grid-template-columns: 1.1fr 0.9fr;
-
       align-items: center;
-
       gap: 80px;
 
       padding: 72px 0;
     }
 
-
     .profile-text {
       max-width: 580px;
     }
 
-
     .profile-label {
       margin-bottom: 18px;
 
-      color: var(--accent-warm);
-
+      color: var(--brown);
       font-size: 13px;
-
       letter-spacing: 0.18em;
     }
-
 
     .profile-name {
       margin-bottom: 18px;
 
-      color: var(--ink);
-
-      font-size: clamp(
-        42px,
-        6vw,
-        76px
-      );
-
+      font-size: clamp(42px, 6vw, 76px);
       font-weight: 500;
-
       line-height: 1.1;
-
       letter-spacing: 0.04em;
     }
 
-
     .profile-description {
-      color: var(--ink-72);
-
+      color: color-mix(in srgb, var(--ink) 72%, transparent);
       font-size: 17px;
-
       max-width: 460px;
     }
 
-
     .profile-image {
       width: min(100%, 390px);
-
       aspect-ratio: 4 / 5;
-
       justify-self: end;
 
       overflow: hidden;
-
-      background: var(--secondary);
+      background: var(--sky);
     }
-
 
     .profile-image img {
       width: 100%;
       height: 100%;
-
       display: block;
-
       object-fit: cover;
     }
 
-
-    /* ==================================================
+    /* =========================
        分類切換
-    ================================================== */
+    ========================= */
 
     .category-nav {
       display: flex;
-
       gap: 38px;
 
       padding: 20px 0;
-
-      border-top:
-        1px solid var(--ink-16);
-
-      border-bottom:
-        1px solid var(--ink-16);
+      border-top: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
+      border-bottom: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
 
       overflow-x: auto;
     }
-
 
     .category-button {
       position: relative;
@@ -292,508 +196,307 @@
       flex: 0 0 auto;
 
       border: 0;
-
       background: transparent;
 
-      color: var(--ink-55);
-
+      color: color-mix(in srgb, var(--ink) 55%, transparent);
       font-size: 15px;
-
       letter-spacing: 0.08em;
 
       padding: 4px 0;
-
       transition: 0.2s;
     }
 
-
     .category-button:hover,
     .category-button.active {
-      color: var(--primary);
+      color: var(--jade);
     }
 
-
     .category-button.active::after {
-
       content: "";
 
       position: absolute;
-
       left: 0;
       right: 0;
-
       bottom: -21px;
 
       height: 2px;
-
-      background: var(--primary);
+      background: var(--jade);
     }
 
-
-    /* ==================================================
+    /* =========================
        內容區
-    ================================================== */
+    ========================= */
 
     .content-area {
-
       min-height: 460px;
-
       padding: 60px 0 100px;
     }
 
-
     .content-header {
-
       display: flex;
-
       justify-content: space-between;
-
       align-items: baseline;
 
       margin-bottom: 34px;
     }
 
-
     .content-title {
-
-      color: var(--ink);
-
       font-size: 26px;
-
       font-weight: 500;
-
       letter-spacing: 0.05em;
     }
 
-
     .content-note {
-
-      color: var(--ink-45);
-
+      color: color-mix(in srgb, var(--ink) 45%, transparent);
       font-size: 13px;
     }
 
-
-    /* ==================================================
-       圖文展示
-    ================================================== */
+    /* 圖文展示 */
 
     .items {
-
       display: grid;
-
-      grid-template-columns:
-        repeat(3, 1fr);
-
+      grid-template-columns: repeat(3, 1fr);
       gap: 42px 28px;
     }
 
-
     .item {
-
-      border-top:
-        1px solid var(--ink-14);
-
+      border-top: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
       padding-top: 18px;
     }
 
-
     .item-image {
-
       width: 100%;
-
       aspect-ratio: 4 / 3;
-
       margin-bottom: 16px;
-
       overflow: hidden;
-
-      background: var(--secondary);
+      background: var(--sky);
     }
-
 
     .item-image img {
-
       width: 100%;
       height: 100%;
-
       display: block;
-
       object-fit: cover;
-
-      transition:
-        transform 0.45s ease;
+      transition: transform 0.45s ease;
     }
-
 
     .item:hover img {
       transform: scale(1.035);
     }
 
-
     .item-category {
-
       margin-bottom: 5px;
-
-      color: var(--secondary);
-
+      color: var(--green-jade);
       font-size: 12px;
-
       letter-spacing: 0.12em;
     }
 
-
     .item-title {
-
-      color: var(--ink);
-
       font-size: 18px;
-
       margin-bottom: 4px;
     }
 
-
     .item-text {
-
-      color: var(--ink-60);
-
+      color: color-mix(in srgb, var(--ink) 58%, transparent);
       font-size: 14px;
     }
 
-
-    /* ==================================================
-       純文字列表
-    ================================================== */
+    /* 純文字列表 */
 
     .text-list {
-
-      border-top:
-        1px solid var(--ink-14);
+      border-top: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
     }
 
-
     .text-list-item {
-
       display: grid;
-
-      grid-template-columns:
-        130px 1fr auto;
-
+      grid-template-columns: 130px 1fr auto;
       gap: 25px;
 
       padding: 21px 0;
-
-      border-bottom:
-        1px solid var(--ink-12);
+      border-bottom: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
     }
 
-
     .text-list-date {
-
-      color: var(--accent-warm);
-
+      color: var(--brown);
       font-size: 13px;
     }
 
-
     .text-list-title {
-
-      color: var(--ink);
-
       font-size: 16px;
     }
 
-
     .text-list-type {
-
-      color: var(--ink-42);
-
+      color: color-mix(in srgb, var(--ink) 42%, transparent);
       font-size: 12px;
     }
 
-
-    /* ==================================================
+    /* =========================
        底部編輯入口
-    ================================================== */
+    ========================= */
 
     .editor-entry {
-
-      border-top:
-        1px solid var(--ink-16);
-
+      border-top: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
       padding: 28px 0 40px;
     }
 
-
     .editor-entry-inner {
-
       display: flex;
-
       justify-content: space-between;
-
       align-items: center;
-
       gap: 20px;
     }
 
-
     .editor-label {
-
-      color: var(--ink-45);
-
+      color: color-mix(in srgb, var(--ink) 45%, transparent);
       font-size: 12px;
-
       letter-spacing: 0.1em;
     }
 
-
     .editor-login {
-
       display: flex;
-
       gap: 8px;
     }
 
-
     .editor-login input {
-
       width: 150px;
 
-      border:
-        1px solid var(--ink-16);
-
+      border: 1px solid color-mix(in srgb, var(--ink) 22%, transparent);
       background: transparent;
 
-      color: var(--ink);
-
       padding: 8px 12px;
-
       outline: none;
     }
 
-
     .editor-login input:focus {
-
-      border-color:
-        var(--primary);
+      border-color: var(--jade);
     }
 
-
     .editor-login button {
-
-      border:
-        1px solid var(--primary);
-
-      background:
-        var(--primary);
-
-      color: var(--paper);
+      border: 1px solid var(--jade);
+      background: var(--jade);
+      color: white;
 
       padding: 8px 16px;
     }
 
-
     .editor-panel {
-
       display: none;
-
       margin-top: 30px;
-
       padding: 30px;
 
-      border:
-        1px solid var(--ink-16);
-
-      background:
-        color-mix(
-          in srgb,
-          var(--paper) 85%,
-          var(--secondary)
-        );
+      border: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
+      background: color-mix(in srgb, var(--paper) 28%, white);
     }
-
 
     .editor-panel.show {
       display: block;
     }
 
-
     .editor-panel h3 {
-
       margin-bottom: 22px;
-
-      color: var(--ink);
-
       font-size: 18px;
-
       font-weight: 500;
     }
 
-
     .editor-row {
-
       display: grid;
-
-      grid-template-columns:
-        130px 1fr;
-
+      grid-template-columns: 130px 1fr;
       gap: 20px;
-
       align-items: center;
 
       margin-bottom: 15px;
     }
 
-
     .editor-row label {
-
       font-size: 13px;
-
-      color: var(--ink-60);
+      color: color-mix(in srgb, var(--ink) 60%, transparent);
     }
-
 
     .editor-row input,
     .editor-row textarea {
-
       width: 100%;
 
-      border:
-        1px solid var(--ink-16);
-
-      background:
-        var(--paper);
-
-      color:
-        var(--ink);
+      border: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
+      background: var(--paper);
 
       padding: 9px 11px;
-
       outline: none;
     }
 
-
     .editor-row textarea {
-
       min-height: 100px;
-
       resize: vertical;
     }
 
-
     .editor-save {
-
       margin-top: 10px;
 
       border: 0;
-
-      background:
-        var(--primary);
-
-      color:
-        var(--paper);
+      background: var(--jade);
+      color: white;
 
       padding: 9px 22px;
     }
 
-
-    /* ==================================================
+    /* =========================
        Footer
-    ================================================== */
+    ========================= */
 
     footer {
-
-      width: min(
-        var(--content-width),
-        calc(100% - 80px)
-      );
-
+      width: min(var(--content-width), calc(100% - 80px));
       margin: 0 auto;
 
       padding: 25px 0 45px;
 
-      color: var(--ink-42);
-
+      color: color-mix(in srgb, var(--ink) 42%, transparent);
       font-size: 12px;
 
-      border-top:
-        1px solid var(--ink-12);
+      border-top: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
     }
 
-
-    /* ==================================================
+    /* =========================
        Responsive
-    ================================================== */
+    ========================= */
 
     @media (max-width: 800px) {
 
       header,
       main,
       footer {
-
-        width: min(
-          100% - 40px,
-          var(--content-width)
-        );
+        width: min(100% - 40px, var(--content-width));
       }
-
 
       header {
         padding-top: 24px;
       }
 
-
       .profile {
-
         grid-template-columns: 1fr;
-
         gap: 35px;
-
         padding: 55px 0;
       }
 
-
       .profile-image {
-
-        width: min(
-          100%,
-          340px
-        );
-
+        width: min(100%, 340px);
         justify-self: start;
       }
 
-
       .profile-name {
-
-        font-size:
-          clamp(
-            42px,
-            12vw,
-            62px
-          );
+        font-size: clamp(42px, 12vw, 62px);
       }
-
 
       .items {
-
-        grid-template-columns:
-          repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr);
       }
-
 
       .text-list-item {
-
-        grid-template-columns:
-          95px 1fr;
+        grid-template-columns: 95px 1fr;
       }
-
 
       .text-list-type {
         display: none;
       }
     }
-
 
     @media (max-width: 520px) {
 
@@ -801,125 +504,86 @@
         font-size: 20px;
       }
 
-
       .header-right {
         gap: 15px;
       }
-
 
       .language {
         gap: 8px;
       }
 
-
       .profile {
         padding: 45px 0;
       }
-
 
       .profile-description {
         font-size: 15px;
       }
 
-
       .category-nav {
         gap: 25px;
       }
-
 
       .items {
         grid-template-columns: 1fr;
       }
 
-
       .content-area {
         padding-top: 45px;
       }
-
 
       .content-header {
         display: block;
       }
 
-
       .content-note {
-
         display: block;
-
         margin-top: 6px;
       }
-
 
       .editor-entry-inner {
         display: block;
       }
 
-
       .editor-login {
         margin-top: 12px;
       }
 
-
       .editor-row {
-
         grid-template-columns: 1fr;
-
         gap: 5px;
       }
     }
-
   </style>
 </head>
 
-
 <body>
 
-
-  <!-- ==================================================
-       Header
-  ================================================== -->
+  <!-- =========================
+       頂部
+  ========================= -->
 
   <header>
-
-    <div class="site-name">
-      你的名字
-    </div>
-
+    <div class="site-name">你的名字</div>
 
     <div class="header-right">
 
       <div class="language">
-
-        <button class="active">
-          中
-        </button>
-
-        <button>
-          EN
-        </button>
-
-        <button>
-          日
-        </button>
-
+        <button class="active">中</button>
+        <button>EN</button>
+        <button>日</button>
       </div>
 
-
-      <button class="menu-button">
-        MENU
-      </button>
+      <button class="menu-button">MENU</button>
 
     </div>
-
   </header>
-
 
   <main>
 
-
-    <!-- ==================================================
+    <!-- =========================
          個人資料
-    ================================================== -->
+    ========================= -->
 
     <section class="profile">
 
@@ -929,11 +593,9 @@
           PROFILE
         </div>
 
-
         <h1 class="profile-name">
           你的名字
         </h1>
-
 
         <p class="profile-description">
           日文系｜學生<br>
@@ -942,529 +604,225 @@
 
       </div>
 
-
       <div class="profile-image">
-
         <img
           src="images/profile.jpg"
           alt="個人照片"
         >
-
       </div>
 
     </section>
 
-
-    <!-- ==================================================
-         分類
-    ================================================== -->
+    <!-- =========================
+         同等級分類
+    ========================= -->
 
     <nav class="category-nav">
 
-      <button
-        class="category-button active"
-        onclick="showCategory('interest', this)"
-      >
+      <button class="category-button active"
+              onclick="showCategory('interest', this)">
         興趣
       </button>
 
-
-      <button
-        class="category-button"
-        onclick="showCategory('skills', this)"
-      >
+      <button class="category-button"
+              onclick="showCategory('skills', this)">
         專長
       </button>
 
-
-      <button
-        class="category-button"
-        onclick="showCategory('fields', this)"
-      >
+      <button class="category-button"
+              onclick="showCategory('fields', this)">
         領域
       </button>
 
-
-      <button
-        class="category-button"
-        onclick="showCategory('recent', this)"
-      >
+      <button class="category-button"
+              onclick="showCategory('recent', this)">
         最近
       </button>
 
     </nav>
 
-
-    <!-- ==================================================
+    <!-- =========================
          內容
-    ================================================== -->
+    ========================= -->
 
     <section class="content-area">
 
+      <!-- 興趣 -->
 
-      <!-- =========================
-           興趣
-      ========================= -->
-
-      <div
-        class="category-content"
-        id="interest"
-      >
+      <div class="category-content" id="interest">
 
         <div class="content-header">
-
-          <h2 class="content-title">
-            興趣
-          </h2>
-
-          <span class="content-note">
-            Things I like
-          </span>
-
+          <h2 class="content-title">興趣</h2>
+          <span class="content-note">Things I like</span>
         </div>
-
 
         <div class="items">
 
-
           <article class="item">
-
             <div class="item-image">
-
-              <img
-                src="images/interest-01.jpg"
-                alt=""
-              >
-
+              <img src="images/interest-01.jpg" alt="">
             </div>
-
-
-            <div class="item-category">
-              MINERAL
-            </div>
-
-
-            <h3 class="item-title">
-              礦物・寶石
-            </h3>
-
-
-            <p class="item-text">
-              礦物、玉石、珠寶與相關知識。
-            </p>
-
+            <div class="item-category">MINERAL</div>
+            <h3 class="item-title">礦物・寶石</h3>
+            <p class="item-text">礦物、玉石、珠寶與相關知識。</p>
           </article>
 
-
           <article class="item">
-
             <div class="item-image">
-
-              <img
-                src="images/interest-02.jpg"
-                alt=""
-              >
-
+              <img src="images/interest-02.jpg" alt="">
             </div>
-
-
-            <div class="item-category">
-              JAPAN
-            </div>
-
-
-            <h3 class="item-title">
-              日本
-            </h3>
-
-
-            <p class="item-text">
-              日本語言、文化與旅行。
-            </p>
-
+            <div class="item-category">JAPAN</div>
+            <h3 class="item-title">日本</h3>
+            <p class="item-text">日本語言、文化與旅行。</p>
           </article>
 
-
           <article class="item">
-
             <div class="item-image">
-
-              <img
-                src="images/interest-03.jpg"
-                alt=""
-              >
-
+              <img src="images/interest-03.jpg" alt="">
             </div>
-
-
-            <div class="item-category">
-              BEAUTY
-            </div>
-
-
-            <h3 class="item-title">
-              彩妝
-            </h3>
-
-
-            <p class="item-text">
-              妝容、造型與視覺表現。
-            </p>
-
+            <div class="item-category">BEAUTY</div>
+            <h3 class="item-title">彩妝</h3>
+            <p class="item-text">妝容、造型與視覺表現。</p>
           </article>
-
 
         </div>
 
       </div>
 
+      <!-- 專長 -->
 
-      <!-- =========================
-           專長
-      ========================= -->
-
-      <div
-        class="category-content"
-        id="skills"
-        style="display:none;"
-      >
+      <div class="category-content" id="skills" style="display:none;">
 
         <div class="content-header">
-
-          <h2 class="content-title">
-            專長
-          </h2>
-
-          <span class="content-note">
-            What I can do
-          </span>
-
+          <h2 class="content-title">專長</h2>
+          <span class="content-note">What I can do</span>
         </div>
-
 
         <div class="items">
 
-
           <article class="item">
-
             <div class="item-image">
-
-              <img
-                src="images/skill-01.jpg"
-                alt=""
-              >
-
+              <img src="images/skill-01.jpg" alt="">
             </div>
-
-
-            <div class="item-category">
-              LANGUAGE
-            </div>
-
-
-            <h3 class="item-title">
-              日文
-            </h3>
-
-
-            <p class="item-text">
-              日文學習與教學。
-            </p>
-
+            <div class="item-category">LANGUAGE</div>
+            <h3 class="item-title">日文</h3>
+            <p class="item-text">日文學習與教學。</p>
           </article>
 
-
           <article class="item">
-
             <div class="item-image">
-
-              <img
-                src="images/skill-02.jpg"
-                alt=""
-              >
-
+              <img src="images/skill-02.jpg" alt="">
             </div>
-
-
-            <div class="item-category">
-              VOICE
-            </div>
-
-
-            <h3 class="item-title">
-              配音
-            </h3>
-
-
-            <p class="item-text">
-              聲音表現與配音相關經驗。
-            </p>
-
+            <div class="item-category">VOICE</div>
+            <h3 class="item-title">配音</h3>
+            <p class="item-text">聲音表現與配音相關經驗。</p>
           </article>
 
-
           <article class="item">
-
             <div class="item-image">
-
-              <img
-                src="images/skill-03.jpg"
-                alt=""
-              >
-
+              <img src="images/skill-03.jpg" alt="">
             </div>
-
-
-            <div class="item-category">
-              PHOTO
-            </div>
-
-
-            <h3 class="item-title">
-              攝影
-            </h3>
-
-
-            <p class="item-text">
-              影像紀錄與礦物攝影。
-            </p>
-
+            <div class="item-category">PHOTO</div>
+            <h3 class="item-title">攝影</h3>
+            <p class="item-text">影像紀錄與礦物攝影。</p>
           </article>
-
 
         </div>
 
       </div>
 
+      <!-- 領域 -->
 
-      <!-- =========================
-           領域
-      ========================= -->
-
-      <div
-        class="category-content"
-        id="fields"
-        style="display:none;"
-      >
+      <div class="category-content" id="fields" style="display:none;">
 
         <div class="content-header">
-
-          <h2 class="content-title">
-            領域
-          </h2>
-
-          <span class="content-note">
-            Fields
-          </span>
-
+          <h2 class="content-title">領域</h2>
+          <span class="content-note">Fields</span>
         </div>
-
 
         <div class="items">
 
-
           <article class="item">
-
             <div class="item-image">
-
-              <img
-                src="images/field-01.jpg"
-                alt=""
-              >
-
+              <img src="images/field-01.jpg" alt="">
             </div>
-
-
-            <div class="item-category">
-              EDUCATION
-            </div>
-
-
-            <h3 class="item-title">
-              教育・語言
-            </h3>
-
-
-            <p class="item-text">
-              語言學習、教學與教材。
-            </p>
-
+            <div class="item-category">EDUCATION</div>
+            <h3 class="item-title">教育・語言</h3>
+            <p class="item-text">語言學習、教學與教材。</p>
           </article>
 
-
           <article class="item">
-
             <div class="item-image">
-
-              <img
-                src="images/field-02.jpg"
-                alt=""
-              >
-
+              <img src="images/field-02.jpg" alt="">
             </div>
-
-
-            <div class="item-category">
-              JEWELRY
-            </div>
-
-
-            <h3 class="item-title">
-              珠寶產業
-            </h3>
-
-
-            <p class="item-text">
-              礦物、寶石與珠寶相關領域。
-            </p>
-
+            <div class="item-category">JEWELRY</div>
+            <h3 class="item-title">珠寶產業</h3>
+            <p class="item-text">礦物、寶石與珠寶相關領域。</p>
           </article>
 
-
           <article class="item">
-
             <div class="item-image">
-
-              <img
-                src="images/field-03.jpg"
-                alt=""
-              >
-
+              <img src="images/field-03.jpg" alt="">
             </div>
-
-
-            <div class="item-category">
-              DIGITAL
-            </div>
-
-
-            <h3 class="item-title">
-              網頁・AI
-            </h3>
-
-
-            <p class="item-text">
-              網站、工具與數位應用。
-            </p>
-
+            <div class="item-category">DIGITAL</div>
+            <h3 class="item-title">網頁・AI</h3>
+            <p class="item-text">網站、工具與數位應用。</p>
           </article>
-
 
         </div>
 
       </div>
 
+      <!-- 最近 -->
 
-      <!-- =========================
-           最近
-      ========================= -->
-
-      <div
-        class="category-content"
-        id="recent"
-        style="display:none;"
-      >
+      <div class="category-content" id="recent" style="display:none;">
 
         <div class="content-header">
-
-          <h2 class="content-title">
-            最近
-          </h2>
-
-          <span class="content-note">
-            Recently
-          </span>
-
+          <h2 class="content-title">最近</h2>
+          <span class="content-note">Recently</span>
         </div>
-
 
         <div class="text-list">
 
-
           <div class="text-list-item">
-
-            <span class="text-list-date">
-              09 / 2026
-            </span>
-
-            <span class="text-list-title">
-              網站製作
-            </span>
-
-            <span class="text-list-type">
-              PROJECT
-            </span>
-
+            <span class="text-list-date">09 / 2026</span>
+            <span class="text-list-title">網站製作</span>
+            <span class="text-list-type">PROJECT</span>
           </div>
 
-
           <div class="text-list-item">
-
-            <span class="text-list-date">
-              09 / 2026
-            </span>
-
-            <span class="text-list-title">
-              投資入門
-            </span>
-
-            <span class="text-list-type">
-              STUDY
-            </span>
-
+            <span class="text-list-date">09 / 2026</span>
+            <span class="text-list-title">投資入門</span>
+            <span class="text-list-type">STUDY</span>
           </div>
 
-
           <div class="text-list-item">
-
-            <span class="text-list-date">
-              08 / 2026
-            </span>
-
-            <span class="text-list-title">
-              日本旅行
-            </span>
-
-            <span class="text-list-type">
-              TRAVEL
-            </span>
-
+            <span class="text-list-date">08 / 2026</span>
+            <span class="text-list-title">日本旅行</span>
+            <span class="text-list-type">TRAVEL</span>
           </div>
-
 
         </div>
 
       </div>
-
 
     </section>
 
   </main>
 
-
-  <!-- ==================================================
-       編輯區
-  ================================================== -->
+  <!-- =========================
+       最底部獨立編輯區
+  ========================= -->
 
   <section class="editor-entry">
 
-    <div
-      style="
-        width:min(
-          1180px,
-          calc(100% - 80px)
-        );
-        margin:auto;
-      "
-    >
-
+    <div style="width:min(1180px, calc(100% - 80px)); margin:auto;">
 
       <div class="editor-entry-inner">
 
         <span class="editor-label">
           EDITOR
         </span>
-
 
         <div class="editor-login">
 
@@ -1474,7 +832,6 @@
             placeholder="編輯密碼"
           >
 
-
           <button onclick="loginEditor()">
             進入編輯
           </button>
@@ -1483,156 +840,82 @@
 
       </div>
 
+      <!-- 密碼正確後才出現 -->
 
-      <!-- =========================
-           編輯面板
-      ========================= -->
+      <div class="editor-panel" id="editorPanel">
 
-      <div
-        class="editor-panel"
-        id="editorPanel"
-      >
-
-        <h3>
-          編輯內容
-        </h3>
-
+        <h3>編輯內容</h3>
 
         <div class="editor-row">
-
-          <label>
-            姓名
-          </label>
-
-          <input
-            id="editName"
-            type="text"
-            value="你的名字"
-          >
-
+          <label>姓名</label>
+          <input id="editName" type="text" value="你的名字">
         </div>
 
-
         <div class="editor-row">
-
-          <label>
-            身分描述
-          </label>
-
+          <label>身分描述</label>
           <input
             id="editDescription"
             type="text"
             value="日文系｜學生"
           >
-
         </div>
-
 
         <div class="editor-row">
-
-          <label>
-            自我介紹
-          </label>
-
-          <textarea
-            id="editIntro"
-          >正在學習，也在做一些有趣的事。</textarea>
-
+          <label>自我介紹</label>
+          <textarea id="editIntro">正在學習，也在做一些有趣的事。</textarea>
         </div>
-
 
         <div class="editor-row">
-
-          <label>
-            個人照片
-          </label>
-
-          <input
-            id="editProfileImage"
-            type="file"
-            accept="image/*"
-          >
-
+          <label>個人照片</label>
+          <input id="editProfileImage" type="file" accept="image/*">
         </div>
 
-
-        <button
-          class="editor-save"
-          onclick="saveEditor()"
-        >
+        <button class="editor-save" onclick="saveEditor()">
           儲存
         </button>
 
       </div>
 
-
     </div>
 
   </section>
-
-
-  <!-- ==================================================
-       Footer
-  ================================================== -->
 
   <footer>
     個人資料館
   </footer>
 
-
-  <!-- ==================================================
-       JavaScript
-  ================================================== -->
-
   <script>
 
-
-    /* ==================================================
+    /* =========================
        分類切換
-    ================================================== */
+    ========================= */
 
     function showCategory(category, button) {
 
-      document
-        .querySelectorAll(".category-content")
+      document.querySelectorAll(".category-content")
         .forEach(section => {
-
           section.style.display = "none";
-
         });
 
+      document.getElementById(category).style.display = "block";
 
-      document
-        .getElementById(category)
-        .style.display = "block";
-
-
-      document
-        .querySelectorAll(".category-button")
+      document.querySelectorAll(".category-button")
         .forEach(btn => {
-
           btn.classList.remove("active");
-
         });
-
 
       button.classList.add("active");
-
     }
 
-
-    /* ==================================================
+    /* =========================
        編輯登入
        密碼：0890
-    ================================================== */
+    ========================= */
 
     function loginEditor() {
 
       const password =
-        document
-          .getElementById("editorPassword")
-          .value;
-
+        document.getElementById("editorPassword").value;
 
       if (password === "0890") {
 
@@ -1640,103 +923,62 @@
           .getElementById("editorPanel")
           .classList.add("show");
 
-      }
-
-      else {
+      } else {
 
         alert("密碼錯誤");
 
       }
-
     }
 
-
-    /* ==================================================
+    /* =========================
        編輯內容
-    ================================================== */
+    ========================= */
 
     function saveEditor() {
 
       const name =
-        document
-          .getElementById("editName")
-          .value;
-
+        document.getElementById("editName").value;
 
       const description =
-        document
-          .getElementById("editDescription")
-          .value;
-
+        document.getElementById("editDescription").value;
 
       const intro =
-        document
-          .getElementById("editIntro")
-          .value;
+        document.getElementById("editIntro").value;
 
-
-      document
-        .querySelectorAll(".profile-name")
+      document.querySelectorAll(".profile-name")
         .forEach(el => {
-
           el.textContent = name;
-
         });
 
-
-      document
-        .querySelectorAll(".profile-description")
+      document.querySelectorAll(".profile-description")
         .forEach(el => {
-
           el.innerHTML =
-            description +
-            "<br>" +
-            intro;
-
+            description + "<br>" + intro;
         });
-
 
       const imageInput =
-        document
-          .getElementById("editProfileImage");
-
+        document.getElementById("editProfileImage");
 
       if (imageInput.files.length > 0) {
 
-        const reader =
-          new FileReader();
+        const reader = new FileReader();
 
+        reader.onload = function(e) {
 
-        reader.onload =
-          function(e) {
+          document.querySelectorAll(".profile-image img")
+            .forEach(img => {
+              img.src = e.target.result;
+            });
 
-            document
-              .querySelectorAll(
-                ".profile-image img"
-              )
-              .forEach(img => {
+        };
 
-                img.src =
-                  e.target.result;
-
-              });
-
-          };
-
-
-        reader.readAsDataURL(
-          imageInput.files[0]
-        );
-
+        reader.readAsDataURL(imageInput.files[0]);
       }
 
-
       alert("已更新內容");
-
     }
 
   </script>
-
 
 </body>
 </html>
