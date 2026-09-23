@@ -6,12 +6,13 @@
   <title>個人資料館</title>
 
   <style>
-    :root {
-      /* =========================
-         色票
-         ★ 主題色：翡翠 #46634D
-      ========================= */
+    /* =========================================================
+       ↓↓↓ 只需要修改這裡 ↓↓↓
+    ========================================================= */
 
+    :root {
+
+      /* ---------- 色彩 ---------- */
       --paper: #F7F6F1;
       --ink: #282C29;
 
@@ -23,8 +24,34 @@
       --brown: #816C4D;
       --gold: #E8C477;
 
+      /* ---------- 字體 ---------- */
+      --font-main:
+        "Noto Sans TC",
+        "Noto Sans JP",
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        sans-serif;
+
+      --font-display:
+        "Noto Sans TC",
+        "Noto Sans JP",
+        system-ui,
+        sans-serif;
+
+      --font-english:
+        "Helvetica Neue",
+        Arial,
+        sans-serif;
+
+      /* ---------- 網頁寬度 ---------- */
       --content-width: 1180px;
     }
+
+    /* =========================================================
+       ↑↑↑ 修改到這裡就好
+    ========================================================= */
+
 
     * {
       box-sizing: border-box;
@@ -35,13 +62,7 @@
     body {
       background: var(--paper);
       color: var(--ink);
-      font-family:
-        "Noto Sans TC",
-        "Noto Sans JP",
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        sans-serif;
+      font-family: var(--font-main);
       line-height: 1.7;
     }
 
@@ -54,6 +75,7 @@
     button {
       cursor: pointer;
     }
+
 
     /* =========================
        Header
@@ -72,6 +94,7 @@
     }
 
     .site-name {
+      font-family: var(--font-display);
       font-size: 25px;
       font-weight: 600;
       letter-spacing: 0.08em;
@@ -87,6 +110,7 @@
     .language {
       display: flex;
       gap: 14px;
+      font-family: var(--font-english);
       font-size: 13px;
     }
 
@@ -110,6 +134,7 @@
       letter-spacing: 0.08em;
     }
 
+
     /* =========================
        Main
     ========================= */
@@ -119,7 +144,10 @@
       margin: 0 auto;
     }
 
-    /* 個人資料 */
+
+    /* =========================
+       個人資料
+    ========================= */
 
     .profile {
       min-height: 430px;
@@ -140,6 +168,7 @@
       margin-bottom: 18px;
 
       color: var(--brown);
+      font-family: var(--font-english);
       font-size: 13px;
       letter-spacing: 0.18em;
     }
@@ -147,6 +176,7 @@
     .profile-name {
       margin-bottom: 18px;
 
+      font-family: var(--font-display);
       font-size: clamp(42px, 6vw, 76px);
       font-weight: 500;
       line-height: 1.1;
@@ -165,7 +195,7 @@
       justify-self: end;
 
       overflow: hidden;
-      background: var(--sky);
+      background: color-mix(in srgb, var(--paper) 88%, var(--ink));
     }
 
     .profile-image img {
@@ -174,6 +204,7 @@
       display: block;
       object-fit: cover;
     }
+
 
     /* =========================
        分類切換
@@ -223,6 +254,7 @@
       background: var(--jade);
     }
 
+
     /* =========================
        內容區
     ========================= */
@@ -241,6 +273,7 @@
     }
 
     .content-title {
+      font-family: var(--font-display);
       font-size: 26px;
       font-weight: 500;
       letter-spacing: 0.05em;
@@ -248,10 +281,14 @@
 
     .content-note {
       color: color-mix(in srgb, var(--ink) 45%, transparent);
+      font-family: var(--font-english);
       font-size: 13px;
     }
 
-    /* 圖文展示 */
+
+    /* =========================
+       圖文展示
+    ========================= */
 
     .items {
       display: grid;
@@ -269,7 +306,7 @@
       aspect-ratio: 4 / 3;
       margin-bottom: 16px;
       overflow: hidden;
-      background: var(--sky);
+      background: color-mix(in srgb, var(--paper) 88%, var(--ink));
     }
 
     .item-image img {
@@ -287,11 +324,13 @@
     .item-category {
       margin-bottom: 5px;
       color: var(--green-jade);
+      font-family: var(--font-english);
       font-size: 12px;
       letter-spacing: 0.12em;
     }
 
     .item-title {
+      font-family: var(--font-display);
       font-size: 18px;
       margin-bottom: 4px;
     }
@@ -301,7 +340,10 @@
       font-size: 14px;
     }
 
-    /* 純文字列表 */
+
+    /* =========================
+       純文字列表
+    ========================= */
 
     .text-list {
       border-top: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
@@ -318,17 +360,21 @@
 
     .text-list-date {
       color: var(--brown);
+      font-family: var(--font-english);
       font-size: 13px;
     }
 
     .text-list-title {
+      font-family: var(--font-display);
       font-size: 16px;
     }
 
     .text-list-type {
       color: color-mix(in srgb, var(--ink) 42%, transparent);
+      font-family: var(--font-english);
       font-size: 12px;
     }
+
 
     /* =========================
        底部編輯入口
@@ -348,6 +394,7 @@
 
     .editor-label {
       color: color-mix(in srgb, var(--ink) 45%, transparent);
+      font-family: var(--font-english);
       font-size: 12px;
       letter-spacing: 0.1em;
     }
@@ -374,7 +421,7 @@
     .editor-login button {
       border: 1px solid var(--jade);
       background: var(--jade);
-      color: white;
+      color: var(--paper);
 
       padding: 8px 16px;
     }
@@ -385,7 +432,7 @@
       padding: 30px;
 
       border: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
-      background: color-mix(in srgb, var(--paper) 28%, white);
+      background: color-mix(in srgb, var(--paper) 92%, var(--ink));
     }
 
     .editor-panel.show {
@@ -394,6 +441,7 @@
 
     .editor-panel h3 {
       margin-bottom: 22px;
+      font-family: var(--font-display);
       font-size: 18px;
       font-weight: 500;
     }
@@ -433,10 +481,11 @@
 
       border: 0;
       background: var(--jade);
-      color: white;
+      color: var(--paper);
 
       padding: 9px 22px;
     }
+
 
     /* =========================
        Footer
@@ -449,10 +498,12 @@
       padding: 25px 0 45px;
 
       color: color-mix(in srgb, var(--ink) 42%, transparent);
+      font-family: var(--font-english);
       font-size: 12px;
 
       border-top: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
     }
+
 
     /* =========================
        Responsive
@@ -497,6 +548,7 @@
         display: none;
       }
     }
+
 
     @media (max-width: 520px) {
 
@@ -559,10 +611,6 @@
 
 <body>
 
-  <!-- =========================
-       頂部
-  ========================= -->
-
   <header>
     <div class="site-name">你的名字</div>
 
@@ -579,11 +627,8 @@
     </div>
   </header>
 
-  <main>
 
-    <!-- =========================
-         個人資料
-    ========================= -->
+  <main>
 
     <section class="profile">
 
@@ -613,9 +658,6 @@
 
     </section>
 
-    <!-- =========================
-         同等級分類
-    ========================= -->
 
     <nav class="category-nav">
 
@@ -641,13 +683,8 @@
 
     </nav>
 
-    <!-- =========================
-         內容
-    ========================= -->
 
     <section class="content-area">
-
-      <!-- 興趣 -->
 
       <div class="category-content" id="interest">
 
@@ -689,7 +726,6 @@
 
       </div>
 
-      <!-- 專長 -->
 
       <div class="category-content" id="skills" style="display:none;">
 
@@ -731,7 +767,6 @@
 
       </div>
 
-      <!-- 領域 -->
 
       <div class="category-content" id="fields" style="display:none;">
 
@@ -773,7 +808,6 @@
 
       </div>
 
-      <!-- 最近 -->
 
       <div class="category-content" id="recent" style="display:none;">
 
@@ -810,9 +844,6 @@
 
   </main>
 
-  <!-- =========================
-       最底部獨立編輯區
-  ========================= -->
 
   <section class="editor-entry">
 
@@ -840,7 +871,6 @@
 
       </div>
 
-      <!-- 密碼正確後才出現 -->
 
       <div class="editor-panel" id="editorPanel">
 
@@ -880,15 +910,13 @@
 
   </section>
 
+
   <footer>
     個人資料館
   </footer>
 
-  <script>
 
-    /* =========================
-       分類切換
-    ========================= */
+  <script>
 
     function showCategory(category, button) {
 
@@ -907,10 +935,6 @@
       button.classList.add("active");
     }
 
-    /* =========================
-       編輯登入
-       密碼：0890
-    ========================= */
 
     function loginEditor() {
 
@@ -930,9 +954,6 @@
       }
     }
 
-    /* =========================
-       編輯內容
-    ========================= */
 
     function saveEditor() {
 
@@ -955,6 +976,7 @@
           el.innerHTML =
             description + "<br>" + intro;
         });
+
 
       const imageInput =
         document.getElementById("editProfileImage");
