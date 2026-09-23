@@ -413,22 +413,26 @@
     最近
   </button>
   <button class="category-button"
-          onclick="showCategory('focus', this)">
-    關注
+          onclick="showCategory('featured', this)">
+    精選
   </button>
   <button class="category-button"
-          onclick="showCategory('works', this)">
-    實作
+          onclick="showCategory('fields', this)">
+    領域
+  </button>
+  <button class="category-button"
+          onclick="showCategory('records', this)">
+    紀錄
   </button>
 </nav>
     <section class="content-area">
       <!-- =========================
-           關注
+           領域
       ========================= -->
-      <div class="category-content" id="focus">
+    <div class="category-content" id="fields">
         <div class="content-header">
-          <h2 class="content-title">關注</h2>
-          <span class="content-note">Things I follow</span>
+         <h2 class="content-title">領域</h2>
+<span class="content-note">Fields</span>
         </div>
         <div class="items">
           <article class="item">
@@ -458,12 +462,12 @@
         </div>
       </div>
       <!-- =========================
-           實作
+           紀錄
       ========================= -->
-      <div class="category-content" id="works" style="display:none;">
+<div class="category-content" id="records" style="display:none;">
         <div class="content-header">
-          <h2 class="content-title">實作</h2>
-          <span class="content-note">What I make</span>
+<h2 class="content-title">紀錄</h2>
+<span class="content-note">Records</span>
         </div>
         <div class="items">
           <article class="item">
@@ -517,6 +521,15 @@
             <span class="text-list-type">TRAVEL</span>
           </div>
         </div>
+        <!-- =========================
+           精選
+      ========================= -->
+        <div class="category-content" id="featured" style="display:none;">
+  <div class="content-header">
+    <h2 class="content-title">精選</h2>
+    <span class="content-note">Featured</span>
+  </div>
+</div>
       </div>
     </section>
   </main>
