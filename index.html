@@ -1,862 +1,1250 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>個人資料館</title>
-
-  <style>
-    /* =========================================================
-       ↓↓↓ 只需要修改這裡 ↓↓↓
-    ========================================================= */
-    :root {
-      /* ---------- 色彩 ---------- */
-      --paper: #F7F6F1;
-      --ink: #282C29;
-      --jade: #46634D;
-      --green-jade: #4B897D;
-      --brown: #816C4D;
-
-      /* ---------- 字體 ---------- */
-      --font-main:
-        "Noto Sans TC",
-        "Noto Sans JP",
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        sans-serif;
-
-      --font-display:
-        "Noto Sans TC",
-        "Noto Sans JP",
-        system-ui,
-        sans-serif;
-
-      --font-english:
-        "Helvetica Neue",
-        Arial,
-        sans-serif;
-    }
-
-    /* =========================================================
-       ↑↑↑ 修改到這裡就好
-    ========================================================= */
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      background: var(--paper);
-      color: var(--ink);
-      font-family: var(--font-main);
-      line-height: 1.7;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    button {
-      font: inherit;
-      cursor: pointer;
-    }
-
-    /* =========================
-       Header
-    ========================= */
-
-    header {
-      width: calc(100% - 100px);
-      margin: 0 auto;
-      padding: 34px 0 22px;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      border-bottom: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
-    }
-
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 28px;
-    }
-
-    .language {
-      display: flex;
-      gap: 14px;
-      font-family: var(--font-english);
-      font-size: 13px;
-    }
-
-    .language button,
-    .menu-button {
-      border: 0;
-      background: transparent;
-      color: var(--ink);
-      opacity: 0.65;
-      transition: 0.2s;
-    }
-
-    .language button:hover,
-    .language button.active,
-    .menu-button:hover {
-      color: var(--jade);
-      opacity: 1;
-    }
-
-    .menu-button {
-      font-family: Arial, sans-serif;
-      font-size: 24px;
-      line-height: 1;
-      padding: 0;
-    }
-
-    /* =========================
-       Main
-    ========================= */
-
-    main {
-      width: calc(100% - 100px);
-      margin: 0 auto;
-    }
-
-    /* =========================
-       個人資料
-    ========================= */
-
-    .profile {
-      min-height: 430px;
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      align-items: center;
-      gap: 80px;
-      padding: 72px 0;
-    }
-
-    .profile-text {
-      max-width: 580px;
-    }
-
-    .profile-label {
-      margin-bottom: 18px;
-      color: var(--brown);
-      font-family: var(--font-english);
-      font-size: 13px;
-      letter-spacing: 0.18em;
-    }
-
-    .profile-name {
-      margin-bottom: 18px;
-      font-family: var(--font-display);
-      font-size: clamp(42px, 6vw, 76px);
-      font-weight: 500;
-      line-height: 1.1;
-      letter-spacing: 0.04em;
-    }
-
-    .profile-description {
-      color: color-mix(in srgb, var(--ink) 72%, transparent);
-      font-size: 17px;
-      max-width: 460px;
-    }
-
-    .profile-image {
-      width: min(100%, 390px);
-      aspect-ratio: 4 / 5;
-      justify-self: end;
-      overflow: hidden;
-      background: color-mix(in srgb, var(--paper) 88%, var(--ink));
-    }
-
-    .profile-image img {
-      width: 100%;
-      height: 100%;
-      display: block;
-      object-fit: cover;
-    }
-
-    /* =========================
-       分類切換
-    ========================= */
-
-    .category-nav {
-      display: flex;
-      gap: 42px;
-      padding: 8px 0 26px;
-    }
-
-    .category-button {
-      position: relative;
-      flex: 0 0 auto;
-      border: 0;
-      background: transparent;
-      color: color-mix(in srgb, var(--ink) 45%, transparent);
-      font-size: 15px;
-      font-weight: 400;
-      letter-spacing: 0.08em;
-      padding: 0;
-      transition:
-        color 0.25s ease,
-        transform 0.25s ease;
-      touch-action: manipulation;
-      -webkit-tap-highlight-color: transparent;
-      user-select: none;
-      -webkit-user-select: none;
-    }
-
-    /* 游標停留：視覺放大 7 */
-    .category-button:hover {
-      color: var(--ink);
-      transform: scale(1.4);
-      font-weight: 600;
-    }
-
-    /* 選取中：視覺稍微放大 2 */
-    .category-button.active {
-      color: var(--ink);
-      transform: scale(1.13);
-      font-weight: 600;
-    }
-
-    /* 選取中的翡翠短線 */
-    .category-button.active::after {
-      content: "";
-      position: absolute;
-      left: 50%;
-      bottom: -10px;
-      width: 24px;
-      height: 2px;
-      background: var(--jade);
-      transform: translateX(-50%) scaleX(0);
-      transform-origin: center;
-      animation: categoryLine 0.3s ease forwards;
-    }
-
-    @keyframes categoryLine {
-      to {
-        transform: translateX(-50%) scaleX(1);
-      }
-    }
-
-    /* =========================
-       內容區
-       選項列以下的總高度固定
-       內容少的分類會自動留下空白
-    ========================= */
-
-    .content-area {
-      padding: 20px 0 100px;
-      min-height: 650px;
-    }
-
-    /* =========================
-       圖文展示
-       固定三個一排
-    ========================= */
-
-    .items {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 42px 28px;
-    }
-
-    .item {
-      display: block;
-      padding-top: 18px;
-    }
-
-    .item-image {
-      width: 100%;
-      aspect-ratio: 4 / 3;
-      margin-bottom: 9px;
-      overflow: hidden;
-      background: color-mix(in srgb, var(--paper) 88%, var(--ink));
-    }
-
-    .item-image img {
-      width: 100%;
-      height: 100%;
-      display: block;
-      object-fit: cover;
-      transition: transform 0.45s ease;
-    }
-
-    .item:hover img {
-      transform: scale(1.035);
-    }
-
-    .item-category {
-      margin-bottom: 2px;
-      color: var(--green-jade);
-      font-family: var(--font-english);
-      font-size: 12px;
-      letter-spacing: 0.12em;
-    }
-
-    .item-title {
-      font-family: var(--font-display);
-      font-size: 18px;
-    }
-
-    /* =========================
-       純文字列表
-    ========================= */
-
-    .text-list {
-      width: 100%;
-    }
-
-    .text-list-item {
-      display: grid;
-      grid-template-columns: 130px 1fr auto;
-      gap: 25px;
-      padding: 21px 0;
-      border-bottom: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
-    }
-
-    .text-list-date {
-      color: var(--brown);
-      font-family: var(--font-english);
-      font-size: 13px;
-    }
-
-    .text-list-title {
-      font-family: var(--font-display);
-      font-size: 16px;
-    }
-
-    .text-list-type {
-      color: color-mix(in srgb, var(--ink) 42%, transparent);
-      font-family: var(--font-english);
-      font-size: 12px;
-    }
-
-    /* =========================
-       Footer
-    ========================= */
-
-    footer {
-      width: calc(100% - 100px);
-      margin: 0 auto;
-      padding: 30px 0 25px;
-      border-top: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
-      color: color-mix(in srgb, var(--ink) 55%, transparent);
-      font-size: 12px;
-    }
-
-    .footer-contact {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 30px;
-      padding-bottom: 28px;
-    }
-
-    .footer-title {
-      color: var(--ink);
-      font-size: 13px;
-      letter-spacing: 0.08em;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 24px;
-      align-items: baseline;
-    }
-
-    .footer-links a {
-      transition: color 0.2s;
-    }
-
-    .footer-links a:hover {
-      color: var(--jade);
-    }
-
-    .footer-bottom {
-      padding-top: 18px;
-      border-top: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
-      text-align: center;
-      color: color-mix(in srgb, var(--ink) 35%, transparent);
-      font-family: var(--font-english);
-      font-size: 11px;
-    }
-
-    /* =========================
-       Responsive
-       不改變 .items 三欄排列
-    ========================= */
-
-    @media (max-width: 800px) {
-
-      header,
-      main,
-      footer {
-        width: min(100% - 40px, 100%);
-      }
-
-      header {
-        padding-top: 24px;
-      }
-
-      .profile {
-        grid-template-columns: 1fr;
-        gap: 35px;
-        padding: 55px 0;
-      }
-
-      .profile-image {
-        width: min(100%, 340px);
-        justify-self: start;
-      }
-
-      .profile-name {
-        font-size: clamp(42px, 12vw, 62px);
-      }
-
-      .text-list-item {
-        grid-template-columns: 95px 1fr;
-      }
-
-      .text-list-type {
-        display: none;
-      }
-    }
-
-    @media (max-width: 520px) {
-
-      .header-right {
-        gap: 15px;
-      }
-
-      .language {
-        gap: 8px;
-      }
-
-      .profile {
-        padding: 45px 0;
-      }
-
-      .profile-description {
-        font-size: 15px;
-      }
-
-      .category-nav {
-        gap: 25px;
-      }
-
-      .content-area {
-        padding-top: 16px;
-      }
-
-      .footer-contact {
-        display: block;
-      }
-
-      .footer-links {
-        display: block;
-        margin-top: 14px;
-      }
-
-      .footer-links span,
-      .footer-links a {
-        display: block;
-        margin-top: 7px;
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-  <header>
-
-    <div class="header-right">
-
-      <div class="language">
-        <button class="active">中</button>
-        <button>EN</button>
-        <button>日</button>
-      </div>
-
-      <button
-        class="menu-button"
-        aria-label="選單">
-        ☰
-      </button>
-
-    </div>
-
-  </header>
-
-  <main>
-
-    <!-- =========================
-         個人資料
-    ========================= -->
-
-    <section class="profile">
-
-      <div class="profile-text">
-
-        <div class="profile-label">
-          PROFILE
-        </div>
-
-        <h1 class="profile-name">
-          我叫屁眼 金色傳說
-        </h1>
-
-        <p class="profile-description">
-          日文系｜學生<br>
-          沒學過代碼做這個所以我一直哭。
-        </p>
-
-      </div>
-
-      <div class="profile-image">
-
-        <img
-          src="images/profile.jpg"
-          alt="個人照片">
-
-      </div>
-
-    </section>
-
-    <!-- =========================
-         分類切換
-    ========================= -->
-
-    <nav class="category-nav">
-
-      <button
-        type="button"
-        class="category-button active"
-        data-category="recent">
-        最近
-      </button>
-
-      <button
-        type="button"
-        class="category-button"
-        data-category="featured">
-        精選
-      </button>
-
-      <button
-        type="button"
-        class="category-button"
-        data-category="records">
-        紀錄
-      </button>
-
-    </nav>
-
-    <section class="content-area">
-
-      <!-- =========================
-           最近
-      ========================= -->
-
-      <div
-        class="category-content"
-        id="recent">
-
-        <div class="text-list">
-
-          <div class="text-list-item">
-
-            <span class="text-list-date">
-              09 / 2026
-            </span>
-
-            <span class="text-list-title">
-              網站製作
-            </span>
-
-            <span class="text-list-type">
-              PROJECT
-            </span>
-
-          </div>
-
-          <div class="text-list-item">
-
-            <span class="text-list-date">
-              09 / 2026
-            </span>
-
-            <span class="text-list-title">
-              投資入門
-            </span>
-
-            <span class="text-list-type">
-              STUDY
-            </span>
-
-          </div>
-
-          <div class="text-list-item">
-
-            <span class="text-list-date">
-              08 / 2026
-            </span>
-
-            <span class="text-list-title">
-              日本旅行
-            </span>
-
-            <span class="text-list-type">
-              TRAVEL
-            </span>
-
-          </div>
-
-        </div>
-
-      </div>
-
-      <!-- =========================
-           精選
-      ========================= -->
-
-      <div
-        class="category-content"
-        id="featured"
-        style="display: none;">
-
-        <div class="items">
-
-          <a
-            href="japanese.html"
-            class="item">
-
-            <div class="item-image">
-
-              <img
-                src="images/interest-02.jpg"
-                alt="日文">
-
-            </div>
-
-            <div class="item-category">
-              JAPANESE
-            </div>
-
-            <h3 class="item-title">
-              日文
-            </h3>
-
-          </a>
-
-          <a
-            href="mineral.html"
-            class="item">
-
-            <div class="item-image">
-
-              <img
-                src="images/interest-01.jpg"
-                alt="礦物・寶石">
-
-            </div>
-
-            <div class="item-category">
-              MINERAL
-            </div>
-
-            <h3 class="item-title">
-              礦物・寶石
-            </h3>
-
-          </a>
-
-          <a
-            href="makeup.html"
-            class="item">
-
-            <div class="item-image">
-
-              <img
-                src="images/interest-03.jpg"
-                alt="彩妝">
-
-            </div>
-
-            <div class="item-category">
-              MAKE UP
-            </div>
-
-            <h3 class="item-title">
-              彩妝
-            </h3>
-
-          </a>
-
-        </div>
-
-      </div>
-
-      <!-- =========================
-           紀錄
-      ========================= -->
-
-      <div
-        class="category-content"
-        id="records"
-        style="display: none;">
-
-        <div class="items">
-
-          <a
-            href="japanese.html"
-            class="item">
-
-            <div class="item-image">
-
-              <img
-                src="images/interest-02.jpg"
-                alt="日文">
-
-            </div>
-
-            <div class="item-category">
-              JAPANESE
-            </div>
-
-            <h3 class="item-title">
-              日文
-            </h3>
-
-          </a>
-
-          <a
-            href="mineral.html"
-            class="item">
-
-            <div class="item-image">
-
-              <img
-                src="images/interest-01.jpg"
-                alt="礦物・寶石">
-
-            </div>
-
-            <div class="item-category">
-              MINERAL
-            </div>
-
-            <h3 class="item-title">
-              礦物・寶石
-            </h3>
-
-          </a>
-
-          <a
-            href="makeup.html"
-            class="item">
-
-            <div class="item-image">
-
-              <img
-                src="images/interest-03.jpg"
-                alt="彩妝">
-
-            </div>
-
-            <div class="item-category">
-              MAKE UP
-            </div>
-
-            <h3 class="item-title">
-              彩妝
-            </h3>
-
-          </a>
-
-        </div>
-
-      </div>
-
-    </section>
-
-  </main>
-
-  <footer>
-
-    <div class="footer-contact">
-
-      <div class="footer-title">
-        聯絡
-      </div>
-
-      <div class="footer-links">
-
-        <span>
-          123@gmail.com
-        </span>
-
-        <a
-          href="#"
-          target="_blank">
-          Instagram
-        </a>
-
-      </div>
-
-    </div>
-
-    <div class="footer-bottom">
-      2026 · 個人資料網頁
-    </div>
-
-  </footer>
-
-  <script>
-
-    const buttons =
-      document.querySelectorAll(".category-button");
-
-    const contents =
-      document.querySelectorAll(".category-content");
-
-    function switchCategory(button) {
-
-      const targetId =
-        button.getAttribute("data-category");
-
-      contents.forEach(content => {
-        content.style.display = "none";
-      });
-
-      const target =
-        document.getElementById(targetId);
-
-      if (target) {
-        target.style.display = "block";
-      }
-
-      buttons.forEach(item => {
-        item.classList.remove("active");
-      });
-
-      button.classList.add("active");
-
-    }
-
-    buttons.forEach(button => {
-
-      button.addEventListener("click", function () {
-        switchCategory(this);
-      });
-
-    });
-
-  </script>
-
-</body>
+<!DOCTYPE html> 
+<html lang="zh-Hant"> 
+<head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>個人資料館</title> 
+ 
+  <style> 
+
+    /* ==================================================
+       CSS｜全站基礎設定
+       ================================================== */
+
+    :root { 
+      --paper: #F7F6F1; 
+      --ink: #282C29; 
+      --jade: #46634D; 
+      --green-jade: #4B897D; 
+      --brown: #816C4D; 
+ 
+      --font-main: 
+        "Noto Sans TC", 
+        "Noto Sans JP", 
+        system-ui, 
+        -apple-system, 
+        BlinkMacSystemFont, 
+        sans-serif; 
+ 
+      --font-display: 
+        "Noto Sans TC", 
+        "Noto Sans JP", 
+        system-ui, 
+        sans-serif; 
+ 
+      --font-english: 
+        "Helvetica Neue", 
+        Arial, 
+        sans-serif; 
+    } 
+ 
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+    } 
+ 
+    body { 
+      background: var(--paper); 
+      color: var(--ink); 
+      font-family: var(--font-main); 
+      line-height: 1.7; 
+    } 
+ 
+    a { 
+      color: inherit; 
+      text-decoration: none; 
+    } 
+ 
+    button { 
+      font: inherit; 
+      cursor: pointer; 
+    } 
+
+
+    /* ==================================================
+       HEADER｜頁首
+       標註：語言切換／選單
+       ================================================== */
+
+    header { 
+      width: calc(100% - 100px); 
+      margin: 0 auto; 
+      padding: 34px 0 22px; 
+      display: flex; 
+      align-items: center; 
+      justify-content: flex-end; 
+      border-bottom: 1px solid color-mix(in srgb, var(--ink) 16%, transparent); 
+    } 
+ 
+    .header-right { 
+      display: flex; 
+      align-items: center; 
+      gap: 28px; 
+    } 
+ 
+    .language { 
+      display: flex; 
+      gap: 14px; 
+      font-family: var(--font-english); 
+      font-size: 13px; 
+    } 
+ 
+    .language button, 
+    .menu-button { 
+      border: 0; 
+      background: transparent; 
+      color: var(--ink); 
+      opacity: 0.65; 
+      transition: 0.2s; 
+    } 
+ 
+    .language button:hover, 
+    .language button.active, 
+    .menu-button:hover { 
+      color: var(--jade); 
+      opacity: 1; 
+    } 
+ 
+    .menu-button { 
+      font-family: Arial, sans-serif; 
+      font-size: 24px; 
+      line-height: 1; 
+      padding: 0; 
+    } 
+
+
+    /* ==================================================
+       MAIN｜主要內容
+       ================================================== */
+
+    main { 
+      width: calc(100% - 100px); 
+      margin: 0 auto; 
+    } 
+
+
+    /* ==================================================
+       MAIN｜個人介紹區 PROFILE
+       ================================================== */
+
+    .profile { 
+      min-height: 430px; 
+      display: grid; 
+      grid-template-columns: 1.1fr 0.9fr; 
+      align-items: center; 
+      gap: 80px; 
+      padding: 72px 0; 
+    } 
+ 
+    .profile-text { 
+      max-width: 580px; 
+    } 
+ 
+    .profile-label { 
+      margin-bottom: 18px; 
+      color: var(--brown); 
+      font-family: var(--font-english); 
+      font-size: 13px; 
+      letter-spacing: 0.18em; 
+    } 
+ 
+    .profile-name { 
+      margin-bottom: 18px; 
+      font-family: var(--font-display); 
+      font-size: clamp(42px, 6vw, 76px); 
+      font-weight: 500; 
+      line-height: 1.1; 
+      letter-spacing: 0.04em; 
+    } 
+ 
+    .profile-description { 
+      color: color-mix(in srgb, var(--ink) 72%, transparent); 
+      font-size: 17px; 
+      max-width: 460px; 
+    } 
+ 
+    .profile-image { 
+      width: min(100%, 390px); 
+      aspect-ratio: 4 / 5; 
+      justify-self: end; 
+      overflow: hidden; 
+      background: color-mix(in srgb, var(--paper) 88%, var(--ink)); 
+    } 
+ 
+    .profile-image img { 
+      width: 100%; 
+      height: 100%; 
+      display: block; 
+      object-fit: cover; 
+    } 
+
+
+    /* ==================================================
+       MAIN｜探索區 EXPLORE
+       ================================================== */
+
+    .category-nav { 
+      display: flex; 
+      gap: 42px; 
+      padding: 8px 0 14px; 
+    } 
+ 
+    .category-button { 
+      position: relative; 
+      flex: 0 0 auto; 
+      border: 0; 
+      background: transparent; 
+      color: color-mix(in srgb, var(--ink) 45%, transparent); 
+      font-size: 15px; 
+      font-weight: 400; 
+      letter-spacing: 0.08em; 
+      padding: 0; 
+      transition: 
+        color 0.25s ease, 
+        transform 0.25s ease; 
+      touch-action: manipulation; 
+      -webkit-tap-highlight-color: transparent; 
+      user-select: none; 
+      -webkit-user-select: none; 
+    } 
+ 
+    .category-button:hover { 
+      color: var(--ink); 
+      transform: scale(1.4); 
+      font-weight: 600; 
+    } 
+ 
+    .category-button.active { 
+      color: var(--ink); 
+      transform: scale(1.13); 
+      font-weight: 600; 
+    } 
+ 
+    .category-button.active::after { 
+      content: ""; 
+      position: absolute; 
+      left: 50%; 
+      bottom: -10px; 
+      width: 24px; 
+      height: 2px; 
+      background: var(--jade); 
+      transform: translateX(-50%) scaleX(0); 
+      transform-origin: center; 
+      animation: categoryLine 0.3s ease forwards; 
+    } 
+ 
+    @keyframes categoryLine { 
+      to { 
+        transform: translateX(-50%) scaleX(1); 
+      } 
+    } 
+ 
+    /* 
+      探索區內容。
+      最近固定只顯示最新三筆，
+      精選／紀錄也維持首頁預覽內容。
+    */ 
+    .content-area { 
+      position: relative; 
+      overflow: hidden; 
+      padding: 20px 0 0; 
+    } 
+ 
+    /* 
+      三個分類橫向排列。
+      可左右滑動：
+      最近 → 精選 → 紀錄
+    */ 
+    .category-track { 
+      display: flex; 
+      width: 300%; 
+      align-items: flex-start; 
+      transition: transform 0.4s ease; 
+    } 
+ 
+    .category-content { 
+      flex: 0 0 33.333333%; 
+      width: 33.333333%; 
+      min-width: 0; 
+    } 
+ 
+    .items { 
+      display: grid; 
+      grid-template-columns: repeat(3, minmax(0, 1fr)); 
+      gap: 42px 28px; 
+    } 
+ 
+    .item { 
+      display: block; 
+      padding-top: 18px; 
+    } 
+ 
+    .item-image { 
+      position: relative; 
+      width: 100%; 
+      aspect-ratio: 4 / 3; 
+      margin-bottom: 9px; 
+      overflow: hidden; 
+      background: color-mix(in srgb, var(--paper) 88%, var(--ink)); 
+    } 
+ 
+    .item-image img { 
+      width: 100%; 
+      height: 100%; 
+      display: block; 
+      object-fit: cover; 
+      transition: transform 0.45s ease; 
+    } 
+ 
+    .item:hover img { 
+      transform: scale(1.035); 
+    } 
+ 
+    .item-category { 
+      margin-bottom: 2px; 
+      color: var(--green-jade); 
+      font-family: var(--font-english); 
+      font-size: 12px; 
+      letter-spacing: 0.12em; 
+    } 
+ 
+    .item-title { 
+      font-family: var(--font-display); 
+      font-size: 18px; 
+    } 
+
+
+    /* ==================================================
+       探索區｜紀錄主題特殊卡片
+       records-preview-more
+       ================================================== */
+
+    /* 
+      紀錄第三張：
+      只使用第三筆的圖片作為示意，
+      不顯示第三筆的文字資料。
+    */ 
+    .records-preview-more { 
+      position: relative; 
+    } 
+ 
+    .records-preview-more .item-image::after { 
+      content: ""; 
+      position: absolute; 
+      inset: 0; 
+      background: rgba(40, 44, 41, 0.38); 
+      z-index: 1; 
+    } 
+ 
+    .records-preview-symbol { 
+      position: absolute; 
+      z-index: 2; 
+      left: 50%; 
+      top: 50%; 
+      width: 42px; 
+      height: 42px; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      border: 1px solid rgba(247, 246, 241, 0.78); 
+      border-radius: 50%; 
+      color: var(--paper); 
+      font-family: var(--font-english); 
+      font-size: 19px; 
+      font-weight: 300; 
+      line-height: 1; 
+      transform: translate(-50%, -50%); 
+      transition: 
+        background 0.25s ease, 
+        border-color 0.25s ease, 
+        transform 0.25s ease; 
+    } 
+ 
+    .records-preview-more:hover .records-preview-symbol { 
+      background: rgba(247, 246, 241, 0.12); 
+      border-color: var(--paper); 
+      transform: translate(-50%, -50%) scale(1.08); 
+    } 
+ 
+    .records-preview-more .item-category, 
+    .records-preview-more .item-title { 
+      visibility: hidden; 
+    } 
+
+
+    /* ==================================================
+       探索區｜最近主題
+       ================================================== */
+
+    .text-list { 
+      width: 100%; 
+    } 
+ 
+    .text-list-item { 
+      display: grid; 
+      grid-template-columns: 130px 1fr auto; 
+      gap: 25px; 
+      padding: 21px 0; 
+      border-bottom: 1px solid color-mix(in srgb, var(--ink) 12%, transparent); 
+    } 
+ 
+    .text-list-date { 
+      color: var(--brown); 
+      font-family: var(--font-english); 
+      font-size: 13px; 
+    } 
+ 
+    .text-list-title { 
+      font-family: var(--font-display); 
+      font-size: 16px; 
+    } 
+ 
+    .text-list-type { 
+      color: color-mix(in srgb, var(--ink) 42%, transparent); 
+      font-family: var(--font-english); 
+      font-size: 12px; 
+    } 
+
+
+    /* ==================================================
+       探索區｜精選主題
+       自動更換內容的基底
+       ================================================== */
+
+    /* 
+      精選未來自動換內容的基底。
+ 
+      目前不啟用。
+      未來可設定：
+      data-interval="5000"
+      代表每 5 秒更換一次。
+    */ 
+    .featured-rotation { 
+      --featured-interval: 5000ms; 
+    } 
+
+
+    /* ==================================================
+       MAIN｜領域區 DOMAIN
+       ================================================== */
+
+    /* 領域區域 */ 
+    .domain-section { 
+      min-height: 500px; 
+      margin-top: -50px; 
+      margin-bottom: 100px; 
+      background: rgba(133, 179, 198, 0.25); 
+    } 
+
+
+    /* ==================================================
+       FOOTER｜頁尾
+       ================================================== */
+
+    footer { 
+      width: calc(100% - 100px); 
+      margin: 0 auto; 
+      padding: 30px 0 25px; 
+      border-top: 1px solid color-mix(in srgb, var(--ink) 12%, transparent); 
+      color: color-mix(in srgb, var(--ink) 55%, transparent); 
+      font-size: 12px; 
+    } 
+ 
+    .footer-contact { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: baseline; 
+      gap: 30px; 
+      padding-bottom: 28px; 
+    } 
+ 
+    .footer-title { 
+      color: var(--ink); 
+      font-size: 13px; 
+      letter-spacing: 0.08em; 
+    } 
+ 
+    .footer-links { 
+      display: flex; 
+      gap: 24px; 
+      align-items: baseline; 
+    } 
+ 
+    .footer-links a { 
+      transition: color 0.2s; 
+    } 
+ 
+    .footer-links a:hover { 
+      color: var(--jade); 
+    } 
+ 
+    .footer-bottom { 
+      padding-top: 18px; 
+      border-top: 1px solid color-mix(in srgb, var(--ink) 8%, transparent); 
+      text-align: center; 
+      color: color-mix(in srgb, var(--ink) 35%, transparent); 
+      font-family: var(--font-english); 
+      font-size: 11px; 
+    } 
+
+
+    /* ==================================================
+       CSS｜手機／平板 RWD
+       ================================================== */
+
+    @media (max-width: 800px) { 
+ 
+      header, 
+      main, 
+      footer { 
+        width: min(100% - 40px, 100%); 
+      } 
+ 
+      header { 
+        padding-top: 24px; 
+      } 
+ 
+      .profile { 
+        grid-template-columns: 1fr; 
+        gap: 35px; 
+        padding: 55px 0; 
+      } 
+ 
+      .profile-image { 
+        width: min(100%, 340px); 
+        justify-self: start; 
+      } 
+ 
+      .profile-name { 
+        font-size: clamp(42px, 12vw, 62px); 
+      } 
+ 
+      .text-list-item { 
+        grid-template-columns: 95px 1fr; 
+      } 
+ 
+      .text-list-type { 
+        display: none; 
+      } 
+    } 
+ 
+    @media (max-width: 520px) { 
+ 
+      .header-right { 
+        gap: 15px; 
+      } 
+ 
+      .language { 
+        gap: 8px; 
+      } 
+ 
+      .profile { 
+        padding: 45px 0; 
+      } 
+ 
+      .profile-description { 
+        font-size: 15px; 
+      } 
+ 
+      .category-nav { 
+        gap: 25px; 
+      } 
+ 
+      .content-area { 
+        padding-top: 16px; 
+      } 
+ 
+      .items { 
+        grid-template-columns: repeat(3, minmax(0, 1fr)); 
+        gap: 28px 14px; 
+      } 
+ 
+      .item-category { 
+        font-size: 10px; 
+      } 
+ 
+      .item-title { 
+        font-size: 15px; 
+      } 
+ 
+      .footer-contact { 
+        display: block; 
+      } 
+ 
+      .footer-links { 
+        display: block; 
+        margin-top: 14px; 
+      } 
+ 
+      .footer-links span, 
+      .footer-links a { 
+        display: block; 
+        margin-top: 7px; 
+      } 
+    } 
+  </style> 
+</head> 
+ 
+<body> 
+
+
+  <!-- ==================================================
+       HEADER｜頁首
+       ================================================== -->
+
+  <header> 
+ 
+    <div class="header-right"> 
+ 
+      <div class="language"> 
+        <button class="active">中</button> 
+        <button>EN</button> 
+        <button>日</button> 
+      </div> 
+ 
+      <button 
+        class="menu-button" 
+        aria-label="選單"> 
+        ☰ 
+      </button> 
+ 
+    </div> 
+ 
+  </header> 
+
+
+  <!-- ==================================================
+       MAIN｜主要內容
+       ================================================== -->
+
+  <main> 
+
+
+    <!-- ==================================================
+         MAIN｜個人介紹區 PROFILE
+         ================================================== -->
+
+    <section class="profile"> 
+ 
+      <div class="profile-text"> 
+ 
+        <div class="profile-label"> 
+          PROFILE 
+        </div> 
+ 
+        <h1 class="profile-name"> 
+          我叫屁眼 金色傳說 
+        </h1> 
+ 
+        <p class="profile-description"> 
+          日文系｜學生<br> 
+          沒學過代碼做這個所以我一直哭。 
+        </p> 
+ 
+      </div> 
+ 
+      <div class="profile-image"> 
+ 
+        <img 
+          src="images/profile.jpg" 
+          alt="個人照片"> 
+ 
+      </div> 
+ 
+    </section> 
+
+
+    <!-- ==================================================
+         MAIN｜探索區 EXPLORE
+         包含：最近／精選／紀錄
+         ================================================== -->
+
+    <!-- 探索區 --> 
+    <section class="explore-section"> 
+
+
+      <!-- ==================================================
+           探索區｜分類按鈕
+           最近／精選／紀錄
+           ================================================== -->
+
+      <nav class="category-nav"> 
+ 
+        <button 
+          type="button" 
+          class="category-button active" 
+          data-category="recent"> 
+          最近 
+        </button> 
+ 
+        <button 
+          type="button" 
+          class="category-button" 
+          data-category="featured"> 
+          精選 
+        </button> 
+ 
+        <button 
+          type="button" 
+          class="category-button" 
+          data-category="records"> 
+          紀錄 
+        </button> 
+ 
+      </nav> 
+
+
+      <!-- ==================================================
+           探索區｜分類內容容器
+           ================================================== -->
+
+      <section class="content-area"> 
+ 
+        <div class="category-track"> 
+
+
+          <!-- ==================================================
+               探索區｜最近主題
+               ================================================== -->
+
+          <!-- ==================== 最近 ==================== --> 
+ 
+          <div 
+            class="category-content" 
+            id="recent"> 
+ 
+            <div class="text-list"> 
+ 
+              <!-- 最新 3 筆 --> 
+              <div class="text-list-item"> 
+ 
+                <span class="text-list-date"> 
+                  09 / 2026 
+                </span> 
+ 
+                <span class="text-list-title"> 
+                  網站製作 
+                </span> 
+ 
+                <span class="text-list-type"> 
+                  PROJECT 
+                </span> 
+ 
+              </div> 
+ 
+              <div class="text-list-item"> 
+ 
+                <span class="text-list-date"> 
+                  09 / 2026 
+                </span> 
+ 
+                <span class="text-list-title"> 
+                  投資入門 
+                </span> 
+ 
+                <span class="text-list-type"> 
+                  STUDY 
+                </span> 
+ 
+              </div> 
+ 
+              <div class="text-list-item"> 
+ 
+                <span class="text-list-date"> 
+                  08 / 2026 
+                </span> 
+ 
+                <span class="text-list-title"> 
+                  日本旅行 
+                </span> 
+ 
+                <span class="text-list-type"> 
+                  TRAVEL 
+                </span> 
+ 
+              </div> 
+ 
+            </div> 
+ 
+          </div> 
+
+
+          <!-- ==================================================
+               探索區｜精選主題
+               ================================================== -->
+
+          <!-- ==================== 精選 ==================== --> 
+ 
+          <div 
+            class="category-content featured-rotation" 
+            id="featured" 
+            data-interval="5000"> 
+ 
+            <div class="items"> 
+ 
+              <a 
+                href="japanese.html" 
+                class="item"> 
+ 
+                <div class="item-image"> 
+ 
+                  <img 
+                    src="images/interest-02.jpg" 
+                    alt="日文"> 
+ 
+                </div> 
+ 
+                <div class="item-category"> 
+                  JAPANESE 
+                </div> 
+ 
+                <h3 class="item-title"> 
+                  日文 
+                </h3> 
+ 
+              </a> 
+ 
+ 
+              <a 
+                href="mineral.html" 
+                class="item"> 
+ 
+                <div class="item-image"> 
+ 
+                  <img 
+                    src="images/interest-01.jpg" 
+                    alt="礦物・寶石"> 
+ 
+                </div> 
+ 
+                <div class="item-category"> 
+                  MINERAL 
+                </div> 
+ 
+                <h3 class="item-title"> 
+                  礦物・寶石 
+                </h3> 
+ 
+              </a> 
+ 
+ 
+              <a 
+                href="makeup.html" 
+                class="item"> 
+ 
+                <div class="item-image"> 
+ 
+                  <img 
+                    src="images/interest-03.jpg" 
+                    alt="彩妝"> 
+ 
+                </div> 
+ 
+                <div class="item-category"> 
+                  MAKE UP 
+                </div> 
+ 
+                <h3 class="item-title"> 
+                  彩妝 
+                </h3> 
+ 
+              </a> 
+ 
+            </div> 
+ 
+          </div> 
+
+
+          <!-- ==================================================
+               探索區｜紀錄主題
+               ================================================== -->
+
+          <!-- ==================== 紀錄 ==================== --> 
+ 
+          <div 
+            class="category-content" 
+            id="records"> 
+ 
+            <div class="items"> 
+ 
+              <a 
+                href="japanese.html" 
+                class="item"> 
+ 
+                <div class="item-image"> 
+ 
+                  <img 
+                    src="images/interest-02.jpg" 
+                    alt="日文"> 
+ 
+                </div> 
+ 
+                <div class="item-category"> 
+                  JAPANESE 
+                </div> 
+ 
+                <h3 class="item-title"> 
+                  日文 
+                </h3> 
+ 
+              </a> 
+ 
+ 
+              <a 
+                href="mineral.html" 
+                class="item"> 
+ 
+                <div class="item-image"> 
+ 
+                  <img 
+                    src="images/interest-01.jpg" 
+                    alt="礦物・寶石"> 
+ 
+                </div> 
+ 
+                <div class="item-category"> 
+                  MINERAL 
+                </div> 
+ 
+                <h3 class="item-title"> 
+                  礦物・寶石 
+                </h3> 
+ 
+              </a> 
+
+
+              <!-- ==================================================
+                   探索區｜紀錄主題｜第三張示意卡
+                   ================================================== -->
+
+              <!-- 
+                第三張：
+                使用第三筆的圖片，
+                但不使用第三筆的文字資料。
+                整組點擊後進入完整紀錄。
+              --> 
+              <a 
+                href="records.html" 
+                class="item records-preview-more"> 
+ 
+                <div class="item-image"> 
+ 
+                  <img 
+                    src="images/interest-03.jpg" 
+                    alt=""> 
+ 
+                  <span class="records-preview-symbol"> 
+                    → 
+                  </span> 
+ 
+                </div> 
+ 
+                <div class="item-category"> 
+                </div> 
+ 
+                <h3 class="item-title"> 
+                </h3> 
+ 
+              </a> 
+ 
+            </div> 
+ 
+          </div> 
+ 
+        </div> 
+ 
+      </section> 
+ 
+    </section> 
+
+
+    <!-- ==================================================
+         MAIN｜領域區 DOMAIN
+         ================================================== -->
+
+    <!-- 領域區域 --> 
+    <section class="domain-section"> 
+    </section> 
+ 
+  </main> 
+
+
+  <!-- ==================================================
+       FOOTER｜頁尾
+       ================================================== -->
+
+  <footer> 
+ 
+    <div class="footer-contact"> 
+ 
+      <div class="footer-title"> 
+        聯絡 
+      </div> 
+ 
+      <div class="footer-links"> 
+ 
+        <span> 
+          123@gmail.com 
+        </span> 
+ 
+        <a 
+          href="#" 
+          target="_blank"> 
+          Instagram 
+        </a> 
+ 
+      </div> 
+ 
+    </div> 
+ 
+    <div class="footer-bottom"> 
+      2026 · 個人資料網頁 
+    </div> 
+ 
+  </footer> 
+
+
+  <!-- ==================================================
+       JS｜互動功能
+       ================================================== -->
+
+  <script> 
+
+
+    /* ==================================================
+       JS｜分類切換基礎
+       ================================================== */
+
+    const buttons = 
+      document.querySelectorAll(".category-button"); 
+ 
+    const track = 
+      document.querySelector(".category-track"); 
+ 
+    const contentArea = 
+      document.querySelector(".content-area"); 
+ 
+ 
+    let currentIndex = 0; 
+
+
+    /* ==================================================
+       JS｜分類切換
+       0 = 最近
+       1 = 精選
+       2 = 紀錄
+       ================================================== */
+
+    /* 
+      切換分類
+      0 = 最近
+      1 = 精選
+      2 = 紀錄
+    */ 
+    function switchCategory(index) { 
+ 
+      currentIndex = 
+        Math.max( 
+          0, 
+          Math.min(index, 2) 
+        ); 
+ 
+      /* 
+        每一個 category-content
+        都佔 track 的 1/3。
+ 
+        因此移動 33.333333%
+        就剛好切換一個分類。
+      */ 
+      track.style.transform = 
+        "translateX(-" + 
+        (currentIndex * 33.333333) + 
+        "%)"; 
+ 
+ 
+      buttons.forEach( 
+        (button, buttonIndex) => { 
+ 
+          button.classList.toggle( 
+            "active", 
+            buttonIndex === currentIndex 
+          ); 
+ 
+        } 
+      ); 
+ 
+    } 
+
+
+    /* ==================================================
+       JS｜分類按鈕
+       ================================================== */
+
+    /* 
+      上方分類按鈕
+    */ 
+    buttons.forEach( 
+      (button, index) => { 
+ 
+        button.addEventListener( 
+          "click", 
+          function () { 
+ 
+            switchCategory(index); 
+ 
+          } 
+        ); 
+ 
+      } 
+    ); 
+
+
+    /* ==================================================
+       JS｜手機／平板左右滑動
+       最近 → 精選 → 紀錄
+       紀錄 → 精選 → 最近
+       ================================================== */
+
+    /* 
+      左右滑動
+ 
+      左滑：
+      最近 → 精選 → 紀錄
+ 
+      右滑：
+      紀錄 → 精選 → 最近
+    */ 
+    let touchStartX = 0; 
+    let touchStartY = 0; 
+ 
+ 
+    contentArea.addEventListener( 
+      "touchstart", 
+      function (event) { 
+ 
+        const touch = 
+          event.changedTouches[0]; 
+ 
+        touchStartX = 
+          touch.clientX; 
+ 
+        touchStartY = 
+          touch.clientY; 
+ 
+      }, 
+      { 
+        passive: true 
+      } 
+    ); 
+ 
+ 
+    contentArea.addEventListener( 
+      "touchend", 
+      function (event) { 
+ 
+        const touch = 
+          event.changedTouches[0]; 
+ 
+        const touchEndX = 
+          touch.clientX; 
+ 
+        const touchEndY = 
+          touch.clientY; 
+ 
+        const deltaX = 
+          touchEndX - touchStartX; 
+ 
+        const deltaY = 
+          touchEndY - touchStartY; 
+ 
+ 
+        /* 
+          只有明顯的水平滑動
+          才會切換分類。
+        */ 
+        if ( 
+          Math.abs(deltaX) > 60 && 
+          Math.abs(deltaX) > Math.abs(deltaY) 
+        ) { 
+ 
+          if (deltaX < 0) { 
+ 
+            if (currentIndex < 2) { 
+ 
+              switchCategory( 
+                currentIndex + 1 
+              ); 
+ 
+            } 
+ 
+          } else { 
+ 
+            if (currentIndex > 0) { 
+ 
+              switchCategory( 
+                currentIndex - 1 
+              ); 
+ 
+            } 
+ 
+          } 
+ 
+        } 
+ 
+      }, 
+      { 
+        passive: true 
+      } 
+    ); 
+
+
+    /* ==================================================
+       JS｜精選自動更換內容
+       目前僅保留基底，尚未啟用
+       ================================================== */
+
+    /* 
+      精選自動更換內容的基底
+ 
+      目前故意不啟用。
+ 
+      未來只需要在這裡加入：
+      - 更換內容
+      - 秒數
+      - 淡入淡出／滑動效果
+ 
+      就可以直接接上。
+    */ 
+    const featuredRotation = 
+      document.querySelector(".featured-rotation"); 
+ 
+    const featuredInterval = 
+      featuredRotation 
+        ? Number( 
+            featuredRotation.dataset.interval 
+          ) 
+        : 5000; 
+
+
+    /* 
+      目前不執行 setInterval。
+      等之後確定「精選」的更換方式
+      再正式啟用。
+    */ 
+
+
+    /* ==================================================
+       JS｜頁面初始狀態
+       預設顯示「最近」
+       ================================================== */
+
+    /* 
+      預設顯示「最近」
+    */ 
+    switchCategory(0); 
+ 
+  </script> 
+ 
+</body> 
 </html>
