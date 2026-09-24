@@ -13,13 +13,9 @@
       /* ---------- 色彩 ---------- */
       --paper: #F7F6F1;
       --ink: #282C29;
-      --sky: #A9D0DC;
       --jade: #46634D;
       --green-jade: #4B897D;
-      --blue: #34799A;
-      --deep-blue: #3C5577;
       --brown: #816C4D;
-      --gold: #E8C477;
 
       /* ---------- 字體 ---------- */
       --font-main:
@@ -40,9 +36,6 @@
         "Helvetica Neue",
         Arial,
         sans-serif;
-
-      /* ---------- 網頁寬度 ---------- */
-      --content-width: 1180px;
     }
 
     /* =========================================================
@@ -77,7 +70,7 @@
     ========================= */
 
     header {
-      width: min(var(--content-width), calc(100% - 80px));
+      width: calc(100% - 100px);
       margin: 0 auto;
       padding: 34px 0 22px;
       display: flex;
@@ -127,7 +120,7 @@
     ========================= */
 
     main {
-      width: min(var(--content-width), calc(100% - 80px));
+      width: calc(100% - 100px);
       margin: 0 auto;
     }
 
@@ -260,10 +253,6 @@
       min-height: 650px;
     }
 
-    .category-content {
-      width: 100%;
-    }
-
     /* =========================
        圖文展示
        固定三個一排
@@ -311,11 +300,6 @@
     .item-title {
       font-family: var(--font-display);
       font-size: 18px;
-      margin-bottom: 0;
-    }
-
-    .item-text {
-      display: none;
     }
 
     /* =========================
@@ -356,7 +340,7 @@
     ========================= */
 
     footer {
-      width: min(var(--content-width), calc(100% - 80px));
+      width: calc(100% - 100px);
       margin: 0 auto;
       padding: 30px 0 25px;
       border-top: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
@@ -411,7 +395,7 @@
       header,
       main,
       footer {
-        width: min(100% - 40px, var(--content-width));
+        width: min(100% - 40px, 100%);
       }
 
       header {
@@ -667,10 +651,6 @@
               日文
             </h3>
 
-            <p class="item-text">
-              日文學習、教學與相關經驗。
-            </p>
-
           </a>
 
           <a
@@ -693,10 +673,6 @@
               礦物・寶石
             </h3>
 
-            <p class="item-text">
-              礦物、玉石、珠寶與相關知識。
-            </p>
-
           </a>
 
           <a
@@ -718,10 +694,6 @@
             <h3 class="item-title">
               彩妝
             </h3>
-
-            <p class="item-text">
-              妝容、造型與視覺表現。
-            </p>
 
           </a>
 
@@ -760,10 +732,6 @@
               日文
             </h3>
 
-            <p class="item-text">
-              日文學習、教學與相關經驗。
-            </p>
-
           </a>
 
           <a
@@ -786,10 +754,6 @@
               礦物・寶石
             </h3>
 
-            <p class="item-text">
-              礦物、玉石、珠寶與相關知識。
-            </p>
-
           </a>
 
           <a
@@ -811,10 +775,6 @@
             <h3 class="item-title">
               彩妝
             </h3>
-
-            <p class="item-text">
-              妝容、造型與視覺表現。
-            </p>
 
           </a>
 
