@@ -203,34 +203,61 @@
       background: transparent;
       color: color-mix(in srgb, var(--ink) 45%, transparent);
       font-size: 15px;
+      font-weight: 400;
       letter-spacing: 0.08em;
       padding: 0;
-      transition: color 0.2s ease;
+      transition:
+        color 0.25s ease,
+        transform 0.25s ease;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      -webkit-user-select: none;
     }
 
-    .category-button:hover,
+    /* 游標停留：視覺放大 7 */
+    .category-button:hover {
+      color: var(--ink);
+      transform: scale(1.4);
+      font-weight: 600;
+    }
+
+    /* 選取中：視覺稍微放大 2 */
     .category-button.active {
       color: var(--ink);
+      transform: scale(1.13);
+      font-weight: 600;
     }
 
+    /* 選取中的翡翠短線 */
     .category-button.active::after {
       content: "";
       position: absolute;
       left: 50%;
-      bottom: -14px;
-      width: 4px;
-      height: 4px;
-      transform: translateX(-50%);
+      bottom: -10px;
+      width: 24px;
+      height: 2px;
       background: var(--jade);
-      border-radius: 50%;
+      transform: translateX(-50%) scaleX(0);
+      transform-origin: center;
+      animation: categoryLine 0.3s ease forwards;
+    }
+
+    @keyframes categoryLine {
+      to {
+        transform: translateX(-50%) scaleX(1);
+      }
     }
 
     /* =========================
        內容區
+       選項列以下的總高度固定
+       內容少的分類會自動留下空白
     ========================= */
 
     .content-area {
       padding: 20px 0 100px;
+      min-height: 650px;
     }
 
     .category-content {
@@ -239,6 +266,7 @@
 
     /* =========================
        圖文展示
+       固定三個一排
     ========================= */
 
     .items {
@@ -249,14 +277,13 @@
 
     .item {
       display: block;
-      border-top: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
       padding-top: 18px;
     }
 
     .item-image {
       width: 100%;
       aspect-ratio: 4 / 3;
-      margin-bottom: 16px;
+      margin-bottom: 9px;
       overflow: hidden;
       background: color-mix(in srgb, var(--paper) 88%, var(--ink));
     }
@@ -274,7 +301,7 @@
     }
 
     .item-category {
-      margin-bottom: 5px;
+      margin-bottom: 2px;
       color: var(--green-jade);
       font-family: var(--font-english);
       font-size: 12px;
@@ -284,12 +311,11 @@
     .item-title {
       font-family: var(--font-display);
       font-size: 18px;
-      margin-bottom: 4px;
+      margin-bottom: 0;
     }
 
     .item-text {
-      color: color-mix(in srgb, var(--ink) 58%, transparent);
-      font-size: 14px;
+      display: none;
     }
 
     /* =========================
@@ -377,6 +403,7 @@
 
     /* =========================
        Responsive
+       不改變 .items 三欄排列
     ========================= */
 
     @media (max-width: 800px) {
@@ -404,10 +431,6 @@
 
       .profile-name {
         font-size: clamp(42px, 12vw, 62px);
-      }
-
-      .items {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
       .text-list-item {
@@ -439,10 +462,6 @@
 
       .category-nav {
         gap: 25px;
-      }
-
-      .items {
-        grid-template-columns: 1fr;
       }
 
       .content-area {
@@ -489,7 +508,6 @@
 
   </header>
 
-
   <main>
 
     <!-- =========================
@@ -525,7 +543,6 @@
 
     </section>
 
-
     <!-- =========================
          分類切換
     ========================= -->
@@ -549,19 +566,11 @@
       <button
         type="button"
         class="category-button"
-        data-category="fields">
-        領域
-      </button>
-
-      <button
-        type="button"
-        class="category-button"
         data-category="records">
         紀錄
       </button>
 
     </nav>
-
 
     <section class="content-area">
 
@@ -627,10 +636,8 @@
 
       </div>
 
-
       <!-- =========================
            精選
-           目前清空
       ========================= -->
 
       <div
@@ -638,21 +645,7 @@
         id="featured"
         style="display: none;">
 
-      </div>
-
-
-      <!-- =========================
-           領域
-      ========================= -->
-
-      <div
-        class="category-content"
-        id="fields"
-        style="display: none;">
-
         <div class="items">
-
-          <!-- 日文 -->
 
           <a
             href="japanese.html"
@@ -680,9 +673,6 @@
 
           </a>
 
-
-          <!-- 礦物・寶石 -->
-
           <a
             href="mineral.html"
             class="item">
@@ -708,9 +698,6 @@
             </p>
 
           </a>
-
-
-          <!-- 彩妝 -->
 
           <a
             href="makeup.html"
@@ -742,10 +729,8 @@
 
       </div>
 
-
       <!-- =========================
            紀錄
-           目前清空
       ========================= -->
 
       <div
@@ -753,12 +738,93 @@
         id="records"
         style="display: none;">
 
+        <div class="items">
+
+          <a
+            href="japanese.html"
+            class="item">
+
+            <div class="item-image">
+
+              <img
+                src="images/interest-02.jpg"
+                alt="日文">
+
+            </div>
+
+            <div class="item-category">
+              JAPANESE
+            </div>
+
+            <h3 class="item-title">
+              日文
+            </h3>
+
+            <p class="item-text">
+              日文學習、教學與相關經驗。
+            </p>
+
+          </a>
+
+          <a
+            href="mineral.html"
+            class="item">
+
+            <div class="item-image">
+
+              <img
+                src="images/interest-01.jpg"
+                alt="礦物・寶石">
+
+            </div>
+
+            <div class="item-category">
+              MINERAL
+            </div>
+
+            <h3 class="item-title">
+              礦物・寶石
+            </h3>
+
+            <p class="item-text">
+              礦物、玉石、珠寶與相關知識。
+            </p>
+
+          </a>
+
+          <a
+            href="makeup.html"
+            class="item">
+
+            <div class="item-image">
+
+              <img
+                src="images/interest-03.jpg"
+                alt="彩妝">
+
+            </div>
+
+            <div class="item-category">
+              MAKE UP
+            </div>
+
+            <h3 class="item-title">
+              彩妝
+            </h3>
+
+            <p class="item-text">
+              妝容、造型與視覺表現。
+            </p>
+
+          </a>
+
+        </div>
+
       </div>
 
     </section>
 
   </main>
-
 
   <footer>
 
@@ -790,7 +856,6 @@
 
   </footer>
 
-
   <script>
 
     const buttons =
@@ -799,36 +864,34 @@
     const contents =
       document.querySelectorAll(".category-content");
 
+    function switchCategory(button) {
+
+      const targetId =
+        button.getAttribute("data-category");
+
+      contents.forEach(content => {
+        content.style.display = "none";
+      });
+
+      const target =
+        document.getElementById(targetId);
+
+      if (target) {
+        target.style.display = "block";
+      }
+
+      buttons.forEach(item => {
+        item.classList.remove("active");
+      });
+
+      button.classList.add("active");
+
+    }
 
     buttons.forEach(button => {
 
       button.addEventListener("click", function () {
-
-        const targetId =
-          this.getAttribute("data-category");
-
-
-        contents.forEach(content => {
-          content.style.display = "none";
-        });
-
-
-        const target =
-          document.getElementById(targetId);
-
-
-        if (target) {
-          target.style.display = "block";
-        }
-
-
-        buttons.forEach(item => {
-          item.classList.remove("active");
-        });
-
-
-        this.classList.add("active");
-
+        switchCategory(this);
       });
 
     });
